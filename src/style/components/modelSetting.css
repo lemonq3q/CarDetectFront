@@ -1,0 +1,125 @@
+/* 卡片样式 */
+.text {
+  font-size: 14px;
+}
+
+.modelSetting_state {
+  font-size: 14px;
+}
+
+.modelSetting_disabled {
+  color: #F66E6D;
+  
+}
+
+.modelSetting_able {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #5EC33B;
+}
+
+.modelSetting_able_left {
+  display: flex;
+  align-items: center;
+}
+
+.setting_icon {
+  margin: auto 0;
+  margin-right: 5px;
+}
+
+.item {
+  margin-bottom: 10px;
+  color: #808080;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both
+}
+
+.box-card {
+  width: 440px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+/* 内容样式 */
+.modelSetting_body {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: start;
+}
+
+.model_title {
+  font-weight: 700;
+}
+
+.modelSetting_drawer {
+  padding: 0 40px;
+}
+
+.modelSetting_upload {
+  margin: 30px auto;
+}
+
+.modelSetting_upload_title {
+  font-size: 14px;
+  color: #606266;
+}
+
+/* 图片上传 */
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 700px;
+  height: 393px;
+  line-height: 393px;
+  text-align: center;
+}
+.avatar {
+  width: 700px;
+  height: 393px;
+  object-fit: contain;
+  display: block;
+}
+
+/* 弹窗 */
+.el-dialog {
+  padding: auto auto;
+}
+
+.modelSetting_dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1500px;
+  margin: 0 auto;
+}
+
+.modelSetting_dialog_form {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: center;
+}

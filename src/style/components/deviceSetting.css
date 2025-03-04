@@ -1,0 +1,50 @@
+.deviceSetting_body {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.deviceSetting_left {
+  display: block;
+  width: 833px;
+  margin-right: 20px;
+  padding: 40px;
+  background-color: #fff;
+  height: 100%;
+}
+
+.deviceSetting_right {
+  flex: 1;
+  display: block;
+  padding: 20px;
+  width: 546px;
+  background-color: #fff;
+  height: 100%;
+}
+
+.el-form {
+  text-align: start;
+}
+
+.setting_search_block{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.setting_none {
+  margin: 0 auto;
+  margin-top: 100px;
+  width: 400px;
+  height: 400px;
+}
+
+.setting_none_word {
+  font-size: 15px;
+  color: #3C3F41;
+  margin-bottom: 10px;
+}
+
+.setting_none_button {
+  width: 140px;
+  height: 40px;
+}

@@ -1,0 +1,273 @@
+.RiskRecord-container {
+    display: flex;
+    width: 100%;
+    height:100%;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.RiskRecord-container .Risk-Left-container{
+    height:100%;
+    flex: 2;
+    overflow:auto;
+    /* scrollbar-width: none; */
+    /* -ms-overflow-style: none; */
+    /* background-color:#f0f0f4; */
+    background-color:#fff;
+}
+
+.RiskRecord-container .Risk-Right-container{
+    align-items: center;
+    justify-content: center;
+    height:100%;
+    flex: 1;
+    background-image:linear-gradient(to bottom, #505c79,#4286F4);
+    box-shadow:15px 0 15px -15px #000,-15px 0 15px -15px #000;
+}
+
+.RiskRecord-container .Risk-Right-container .el-table th.el-table__cell{
+    background-color: #393e46 !important;
+}
+
+.RiskRecord-container .Risk-Right-container .el-table th.el-table__cell .cell{
+    color:rgba(255,255,255,0.8);
+}
+
+.RiskRecord-container .TimeChart-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:100%;
+}
+
+
+/* .RiskRecord-container .Risk-Left-container::-webkit-scrollbar{
+    display: none;
+} */
+
+.RiskRecord-container .TimeChart{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    padding-left:3px;
+    height:100%;
+    width:80%;
+}
+
+.RiskRecord-container .TimeChart::before {
+    content: '';
+    position: absolute;
+    top:50px;
+    left: 50%;
+    height: 100%; 
+    width: 4px;
+    background: #d7e4ed;
+    z-index:1;
+}
+
+.RiskRecord-container .TimeChart-item{
+    position:relative;
+    height:100%;
+    width:100%;
+}
+
+.RiskRecord-container .TimeChart-item .TimeChart-item-circle{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    border-radius: 50%;
+    width:20px;
+    height:20px;
+    border: 1px solid #000000;
+    background-color: rgb(255, 255, 255);
+    z-index:2;
+}
+
+
+
+.RiskRecord-container .TimeChart-item .TimeChart-item-circle:hover{
+    box-shadow:0 0 2px #000000;
+}
+
+.RiskRecord-container .TimeChart-item:nth-child(odd) .TimeChart-item-info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position:absolute;
+    top:10px;
+    left:17%;
+    height:300px;
+    width:323px;
+    transform:translateX(-50%);
+}
+
+.RiskRecord-container .TimeChart-item:nth-child(odd)::after{
+    content:attr(content);
+    position: absolute;
+    left:65%;
+    top:50%;
+    text-align: center;
+    line-height: 40px;
+    transform:translate(-50%,-50%);
+    width: 120px;
+    height: 40px;
+    font-size: 20px;
+    color:#FFFFFF;
+    background-color : var(--color);
+    box-shadow:15px 0 15px -15px #000,-15px 0 15px -15px #000;
+}
+
+.RiskRecord-container .TimeChart-item:nth-child(even) .TimeChart-item-info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position:absolute;
+    top:0;
+    left:83%;
+    height:300px;
+    width:323px;
+    transform:translateX(-50%);
+}
+
+.RiskRecord-container .TimeChart-item:nth-child(even)::before{
+    content:attr(content);
+    position: absolute;
+    text-align: center;
+    line-height: 40px;
+    left:35%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width: 120px;
+    height: 40px;
+    font-size: 20px;
+    color:#FFFFFF;
+    background-color : var(--color);
+    box-shadow:15px 0 15px -15px #000,-15px 0 15px -15px #000;
+}
+
+.demo-card{
+    background-color: #46b8e9;
+    width: 100%;
+    height:100%;
+    position: relative;
+    display: block;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    z-index: 2;
+    border-radius: 5px;
+}
+
+.demo-card .card-head{
+    position: relative;
+    display: flex;
+    height:20%;
+    align-items: center;
+    color: #fff;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+    box-shadow: 6px 6px 12px 0 rgba(0, 0, 0, 0.2);
+}
+
+.demo-card .card-head .card-number-box{
+    display: inline;
+    float: left;
+    margin: 15px;
+    padding: 10px;
+    font-size: 35px;
+    line-height: 35px;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.17);
+    border: 0;
+    vertical-align: baseline;
+}
+
+.demo-card .card-head .TimeChart-item-title-riskName{
+    font-size: 165%;
+    line-height: 1.2rem;
+    text-transform: uppercase;
+    font-weight: inherit;
+    letter-spacing: 2px;
+    margin: 0;
+    padding-bottom: 6px;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+.demo-card .card-body{
+    background: #fff;
+    border: 1px solid rgba(191, 191, 191, 0.4);
+    border-top: 0;
+    padding: 15px;
+    margin: 0;
+    font: inherit;
+    display: block;
+    box-shadow: 6px 6px 12px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.demo-card .card-body .TimeChart-item-text{
+    font-size: 14px;
+    line-height: 10px;
+    margin-left:15px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    text-align: left;
+    font: inherit;
+    display: block;
+    color:#A9A9A9;
+}
+
+
+
+.demo-card .card-body .TimeChart-item-text span{
+    font-size: 16px;
+    font-weight: bold;
+    color:rgba(0, 0, 0, 0.7);
+}
+
+.demo-card .card-body .address{
+    margin-top:20px;
+}
+
+.demo-card .card-body .description{
+    margin-bottom:20px;
+}
+
+.demo-card .card-body .TimeChart-item-img{
+    display: block;
+    width: 100%;
+    height:163px;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    object-fit: cover;
+}
+
+.Risk-Right-container .risk-del-btn{
+    width: 100px;
+    height: 50px;
+    margin-top:5%;
+    color: #FFF;
+    background-color: #52616b;
+    box-shadow: 0 0 10px #4369a7;
+    border-radius: 6px;
+    border:none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 2;
+}

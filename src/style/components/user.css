@@ -1,0 +1,396 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.user_body {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    /* position: relative; */
+}
+
+/* 头部 */
+.top{
+    background-image: url("http://123.57.91.218/images/user6.png");
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.top_ui{
+    position: relative;
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* 用户头像 */
+.user_img{
+    /* display: flex; */
+    position: absolute;
+    top: 70px;
+    left: 160px;
+    height: 120px;
+    width: 120px;
+}
+.image-style {
+    border-radius: 50%;
+    /* background-color: aquamarine; */
+    width: 140px;
+    height: 140px;
+  }
+.user_imgbtn{
+    opacity: 0;
+    position: absolute;
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    top: 90px;
+    right: -50px;
+    background-color: black;
+    color: #fff;
+}
+.user_imgbtn_show{
+    position: absolute;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    top: 90px;
+    right: -50px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
+}
+
+/* 更改用户头像 */
+.user_img_top{
+    /* position: relative; */
+    display: flex;
+    padding: 5%;
+    justify-content: space-around;
+    align-items: center;
+}
+/* .user_img_top_left{
+    width: 10px;
+    height: 10px;
+}
+.user_img_top_right{
+    width: 10px;
+    height: 10px;
+} */
+
+
+/* 
+.inputfile{
+    position: absolute;
+    left: 150px;
+    top:100px;
+    overflow: hidden;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 50%; 
+    width: 150px; 
+    height: 150px; 
+    background-color: #d8dbdc; 
+    text-align: center;
+    line-height: 250px; 
+    color: #fff; 
+    font-size: 20px; 
+
+} */
+
+
+/* 头部的三个按钮盒子 */
+.user_btn{
+    display: flex;
+    position: absolute;
+    top: 50%;
+}
+.btn_updatepassword{
+    margin: 10px;
+    height: 40px;
+    width: 100px;
+    top: 100px;
+    text-align: center;
+}
+.btn_getcode{
+    position: absolute;
+    right: 20%;
+}
+/* 里面的文本和输入框 */
+.user_phoneauthtext,user_phoneauthinput{
+    height: 500px;
+}
+.user_phoneauthinput,.user_codeinput{
+    /* opacity: 0; */
+    height: 40px;
+    border: 1px solid gray;
+    /* border-radius: 2%;
+    border-color:grey; */
+    /* display: block; */
+
+
+}
+
+
+.btn_create{
+    padding: 0 !important;
+    margin: 10px 20px 10px 10px;
+    height: 40px;
+    width: 100px;
+    top: 100px;
+    text-align: center;
+}
+
+.btn_edit{
+    margin: 10px;
+    height: 40px;
+    width: 100px;
+    /* position: absolute; */
+    top: 100px;
+    /* right: 20px; */
+}
+
+
+
+
+
+/* 中间的个人主页 */
+.user_main_body{
+    width: 100%;
+    margin-top: 70px;
+    /* box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px; */
+}
+.perform_title{
+    margin: 20px 0;
+    /* text-align: left !important; */
+    margin-left: 20px;
+}
+/* 用户的个人信息展示 */
+.user_msg_body{
+    margin-right: 5%;
+    margin-left: 3%;
+    flex: 4;
+    /* width: 80%; */
+    height: 100%;
+    border-radius: 10px;
+    /* background-color: rgba(17, 17, 26, 0.05); */
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+}
+.perform_body{
+    /* border: 2px solid cadetblue; */
+    position: relative;
+    height: 325px;
+    /* width: 1230px; */
+
+}
+/* 昵称展示部分 */
+.user_nichengbody{
+    display: flex;
+}
+.user_name_inputtext{
+
+    margin-top: 20px;
+    margin-left: 20px;
+    text-align: left !important;
+
+}
+.user_name_input{
+    flex: 1;
+    margin: 10px 40px;
+    border-radius: 5px;
+    height: 40px;
+    border: 1px solid rgba(17, 17, 26, 0.05);
+    background-color: rgba(246, 246, 244, 0.263);
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+    text-align: center;
+    display: block;
+}
+/* 剩下的信息展示部分 */
+/* 大盒子 */
+.user_middle{
+    display: flex;
+    align-items: center;
+}
+/* 小盒子 */
+.user_nameandsex,.user_facandphone,.user_idandaddr{
+    display: flex;
+    /* justify-content: space-between; */
+    /* margin: 10px 3px; */
+}
+.user_namebody,.user_sexbody,.user_facbody,.user_phonebody,.user_idbody,.user_addrbody{
+    /* flex: 1 !important; */
+    /*  flex布局中，align-items是竖直居中，justify-content是水平居中*/
+    align-items: center;
+    width:100%;
+    display: flex;
+}
+.user_nametext,.user_sextext,.user_factext,.user_phonetext,.user_idtext,.user_addrtext{
+    margin-left: 20px;
+    text-align: center !important;
+
+    /* flex: 1; */
+}
+.user_nameinput,.user_sexinput,.user_facinput,.user_phoneinput,.user_idinput,.user_addrinput{
+    margin: 10px 0;
+    height: 40px;
+    width: 80%;
+}
+.user_nameinputbody,.user_sexinputbody,.user_facinputbody,.user_phoneinputbody,.user_idinputbody,.user_addrinputbody{
+    /* flex: 1; */
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    text-align: center;
+    margin: 0 !important;
+    border: 1px solid rgba(17, 17, 26, 0.05);
+    background-color: rgba(246, 246, 244, 0.263);
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+
+}
+
+
+/* 权限展示 */
+.user_auth{
+    /* margin-top: 1%; */
+    margin-right: 10%;
+    width: 15%;
+    flex: 1;
+    height: 100% ;
+    border-radius: 40px;
+    /* box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px; */
+    /* box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; */
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+
+}
+/* .user_auth.el-table_119_column_709{
+    margin-left: 10px;
+    text-align: center;
+} */
+
+
+/* 管理人员表单 */
+.mainArea{
+    width: 95%;
+    position: relative;
+    /* display: flex; */
+    margin: 0px auto;
+    /* box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; */
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+
+}
+
+user_ManageListtext_div{
+    /* position: relative; */
+    margin: 10%;
+}
+.user_ManageListtext{
+    /* position: absolute; */
+    /* left: 10%;
+    top:60%; */
+    left: 2px;
+    margin: 10px;
+    /* border: #fff; */
+    text-align: left !important;
+    z-index: 999;
+    /* width: 10%; */
+    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
+}
+
+.user_body .el-select .el-input{
+    width: 240px !important;
+}
+
+.user_body .el-input__inner{
+    height: 40px !important;
+}
+
+.user_img_top_left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 400px;
+    background-color: #fff;
+}
+
+.user_img_top_left_body {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.user_img_top_right{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%
+}
+
+.user_img_top_right_body{
+    -moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+    position: absolute;
+    width: 400px;
+    height: 400px;
+}
+
+.user_bottom_img{
+    -moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    position: absolute;
+    left: 0%;
+    z-index: 1;
+    text-align: center;
+}
+
+.user_img_mask {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+}
+
+.user_top_img_container {
+    position: absolute;
+    top:10px;
+    left: 10px;
+    z-index: 3;
+    overflow: hidden;
+    border: 2px dashed #fff;
+    width: 200px;
+    height: 200px;
+}
+
+.user_top_img {
+    pointer-events: none;
+    -moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+    position: absolute;
+    z-index: 4;
+    left: -10px;
+    top: -10px;
+    width: 400px;
+    height: 400px;
+
+}

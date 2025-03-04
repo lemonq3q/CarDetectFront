@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'logo';
+  src: url('../../assets/logo.ttf');
+}
+
+.menu_body{
+  overflow: hidden;
+  height: 100vh;
+}
+
+.logo_container {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+  background-color: #434A50;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.logo_title {
+  font-size: 30px;
+  text-align: center;
+  margin-left: 10px;
+  color: #fff;
+  font-family: logo;
+
+}
+
+.iconfont {
+  margin-right: 10px;
+  width: 15px;
+  height: 15px;
+}
+.menu_body {
+  width: 251px;
+  background-color: #565C64;
+}

@@ -1,0 +1,73 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  /* overflow: hidden; */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 内容布局 */
+.el-header {
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+  line-height: 60px;
+  box-shadow: 6rpx 6rpx 12rpx 0 rgba(0, 0, 0, 0.2);
+}
+
+.el-aside {
+  text-align: start;
+  height: 100vh !important;
+  background-color: #555C64;
+  overflow: hidden !important;
+}
+
+.el-container{
+  height: 100vh !important;
+}
+
+#el_container_body{
+  height: 100vh !important;
+}
+
+.el-main {
+  background-color: #E9EEF3;
+  color: #333;
+  height: 1020px;
+  padding: 10px;
+  
+}
+
+body > .el-container {
+  margin-bottom: 40px;
+}
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+  line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+  line-height: 320px;
+}
+
+.el-container {
+  height: 1080px;
+}
+
+/* 取消router默认样式 */
+.router-link-active {
+  text-decoration: none;
+  color: #fff;
+}
+a {
+  text-decoration: none;
+  color: #fff;
+}
+/* 布局样式 */

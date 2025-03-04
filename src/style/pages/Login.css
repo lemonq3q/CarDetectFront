@@ -1,0 +1,221 @@
+.login_logo_container{
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+  border-radius: 10px;
+}
+
+.login_input {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 40px;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid #A9A9A9;
+  outline: none;
+}
+
+.login_button {
+  margin-top: 30px;
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3976F9;
+  background-image: linear-gradient(to bottom, blue, transparent), 
+                  linear-gradient(to right, red, transparent);
+  /* font-weight: 700; */
+  font-size: 15px;
+  color: #fff;
+}
+
+.change_button {
+  width: 80px;
+  height: 30px;
+  order: none;
+  border-radius: 5px;
+  border: none;
+  background-color: #fff;
+  color: #3976F9;
+  font-weight: 700;
+}
+
+.login_title{
+  margin-bottom: 40px;
+  font-size: 20px;
+}
+
+.change_title {
+  color: #fff;
+  font-size: 17px;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+.login_body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  text-align: start;
+}
+
+.login_body:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* 确保伪元素位于内容层之下 */
+
+  /* 设置背景图片 */
+  background-image: url("http://www.lemonqwq.xyz/images/web/login_bgc.jpeg");
+  background-size: cover;
+  background-position: center;
+
+  /* 添加高斯模糊效果 */
+  filter: blur(10px);
+}
+
+.login_container {
+  position: absolute;
+  display: flex;
+  width: 41vw;
+  height: 50.1vh;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.account_sign_container{
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+
+}
+
+.phone_sign_container {
+  position: relative;
+
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.account_sign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  padding-top: 100px;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  transition: all 0.6s ease-in-out;
+  z-index: 2;
+  /* transform: translateX(100%) !important; */
+}
+
+.phone_sign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  padding-top: 100px;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  transition: all 0.6s ease-in-out;
+  transform: translateX(-100%);
+  z-index: 1;
+}
+
+.verify_block {
+  display: flex;
+  width: 100%;
+}
+
+/* .verify_input {
+
+} */
+
+.verify_button {
+  margin-bottom: 10px;
+  width: 5.85vw;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px solid rgb(169,169,169);
+  background-color: #fff;
+  color: rgb(142, 141, 141);
+}
+
+.overlay_container {
+  position: absolute;
+  transition: all 0.6s ease-in-out;
+  transform: translateX(100%);
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  transform: translateX(-50%);
+  transition: all 0.6s ease-in-out;
+  width: 200%;
+  height: 100%;
+  background-image: linear-gradient(to bottom, blue, transparent), 
+  linear-gradient(to right, transparent, red);
+  /* background-color: #3976F9; */
+  display: flex;
+}
+
+.overlay_right {
+  position: relative;
+  top: -7%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+.overlay_left {
+  position: relative;
+  top: -7%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+
+.animation_account {
+  transform: translateX(100%) !important;
+}
+
+.animation_phone {
+  transform: translateX(0%) !important;
+}
+
+.animation_overlay {
+  transform: translateX(0%) !important;
+}
+
+.animation_overlay_container {
+  transform: translateX(0%) !important;
+}
+

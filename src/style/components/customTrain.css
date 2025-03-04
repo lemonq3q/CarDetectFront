@@ -1,0 +1,85 @@
+.customTrain_body {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.customTrain_left {
+  display: block;
+  width: 833px;
+  margin-right: 20px;
+  padding: 20px 40px;
+  background-color: #fff;
+  height: 100%;
+}
+
+.customTrain_right {
+  flex: 1;
+  display: block;
+  padding: 20px;
+  width: 546px;
+  background-color: #fff;
+  height: 100%;
+}
+
+.upload_item {
+  line-height: 0;
+}
+
+
+.customTrain_tip {
+  line-height: 20px;
+}
+
+.customSetting_none_word {
+  font-size: 15px;
+  color: #3C3F41;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.customTrain_tip_title{
+  border-left: 4px solid #73D3F3;
+  margin-top: 20px;
+  margin-left: 20px;
+  text-align: start;
+  padding-left: 20px;
+  font-weight: 700;
+  font-size: 20px;
+}
+ 
+.customTrain_word_title {
+  margin: 20px 0;
+  margin-left: 20px;
+  text-align: start;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.customTrain_word {
+  margin-left: 20px;
+  text-align: start;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.customTrain_highlight_word {
+  text-align: start;
+  color: #F66E6D;
+}
+
+.customTrain_none {
+  margin: 0 auto;
+  margin-top: 170px;
+  width: 400px;
+  height: 300px;
+  object-fit: contain;
+}
+
+.customTrain_img {
+  text-align: start;
+  width: 400px;
+  height: 200px;
+  object-fit: contain;
+  border: 1px solid #000;
+}

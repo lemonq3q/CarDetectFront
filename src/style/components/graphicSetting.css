@@ -1,0 +1,96 @@
+.graphicSetting_body {
+    display: flex;
+
+}
+
+.graphic_left{
+    margin-right: 6px;
+    padding: 20px;
+    height: 100%;
+    background-color: #fff;
+    flex: 6;
+}
+
+.graphic_right{
+    margin-left: 6px;
+    padding: 20px;
+    height: 100%;
+    background-color: #fff;
+    flex: 5;
+}
+
+.graphic_left > .el-radio-group {
+    margin: 0 !important;
+}
+
+.graphic_right_h1{
+    border-left: 4px solid #73D3F3;
+    padding-left: 10px;
+    height: 25px;
+    line-height: 25px;
+    margin-top: 7px;
+    margin-left: 10px;
+    text-align: left;
+}
+.map_canvas_container{
+    width: 800px;
+    height: 600px;
+    background-color: #fff;
+    text-align: center;
+    /* line-height: 540px; */
+    margin: 20px auto;
+    position: relative;
+    /* box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3), 0 15px 20px rgba(0,0,0,0.25);
+}
+
+.graphic_button_container {
+    margin-top: 30px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid #D3D3D3;
+}
+
+.graphic_left_bottom {
+    display: flex;
+    padding-top: 8px;
+    padding-left: 10px;
+    text-align: left;
+}
+
+.graphic_msg {
+    color: grey;
+}
+
+.graphic_right_pic {
+    margin-top: 23px;
+    object-fit: cover;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3), 0 15px 20px rgba(0,0,0,0.25);
+}
+
+.point_cursor{
+    user-select: none; 
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select:none;
+}
+
+.point_add_cursor {
+    cursor: url(../../assets/add.png) 15 15,cell;
+}
+
+.point_delete_cursor {
+    cursor: url(../../assets/delete.png) 15 15,cell;
+}
+
+
+
+.graphic_button {
+    padding: 0 !important;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+}
+
+.graphic_button > span{
+    margin: auto;
+}
