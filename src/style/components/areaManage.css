@@ -1,0 +1,138 @@
+.AreaManage_body {
+    display: flex;
+  }
+  
+.AreaManage__left {
+    flex: 12;
+    display: block;
+    margin-right: 20px;
+    padding: 20px 20px 20px 20px;
+    background-color: #fff;
+    }
+  
+.AreaManage_body_right {
+    flex: 8;
+    padding: 20px 40px;
+    display: block;
+    background-color: #fff;
+}
+
+.area_search_block {
+    line-height: 0;
+    margin-bottom: 20px;
+}
+
+  
+.chart_title{
+    border-left: 4px solid #73D3F3;
+    margin-top: 20px;
+    margin-left: 20px;
+    text-align: start;
+    padding-left: 20px;
+    font-weight: 700;
+    font-size: 20px;
+}
+  
+.area_headshot {
+    margin: auto auto;
+    width: 55px;
+    height: 55px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.AreaManage_left_title > * > * > * > * > * > * > * > .cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.AreaManage_left_title {
+    border-left: 4px solid #73D3F3;
+    text-align: start;
+    padding-left: 20px;
+    font-weight: 700;
+    font-size: 20px;
+}
+  
+.area_none {
+    margin: 0 auto;
+    margin-top: 240px;
+    width: 350px;
+    height: 250px;
+    object-fit: contain;
+}
+  
+  /* 图片上传 */
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+    border-color: #409EFF;  
+}
+.area_avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+}
+.area_avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+}
+
+.area_headshot_uploader {
+    width: 100px !important;
+    height: 100px !important;
+}
+  
+  /* 表单 */
+.area_add_form{
+    text-align: left;
+}
+
+.seniority_position_row {
+    display: flex;
+    justify-content: space-start;
+}
+/* .seniority_position_row {
+    width: 100%;
+} */
+
+
+
+
+.desc-input .el-input__inner {
+    width: 100%;
+    height: 100px;
+    padding-right: 20px; /* 留出空间给斜杠 */
+    position: relative;
+}
+
+.desc-input .el-input__inner::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 10px;
+    height: 10px;
+    border-left: 2px solid #000;
+    border-bottom: 2px solid #000;
+    transform: rotate(45deg);
+}
+
+.seniority_position_row > .el-col {
+    flex: 1;
+}
+
+.seniority_position_row > .el-col:nth-child(1) {
+    margin-right: 40px;
+}

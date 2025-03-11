@@ -1,0 +1,112 @@
+/* 搜索记录界面 */
+
+.recordManage_body_search{
+    display: flex;
+}
+
+.recordManage_left{
+    flex: 4;
+    display: block;
+    margin-right: 20px;
+    padding: 20px 20px 20px 20px;
+    background-color: #fff;
+}
+
+.search_block {
+    line-height: 0;
+    margin-bottom: 5%;
+}
+
+.el-pagination {
+    margin: 20px 0;
+    line-height: 0;
+}
+  
+.input-with-select {
+    height: 50px;
+}
+  
+.el-input__inner {
+    height: 50px;
+}
+
+.recordManage_right{
+    flex: 2;
+    display: block;
+    background-color: #b86f6f;
+}
+
+/* 记录详细展示界面的css */
+.recordManage_body_check {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ecebeb;
+    border-radius: 8px;
+  }
+  
+.recordManage_check_left {
+    flex: 1;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+  
+.recordManage_check_left .info-group {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recordManage_check_left .info-group label {
+    /* font-weight: bold; */
+    margin-top:30px;
+    margin-left: 10px;
+    color: grey;
+}
+
+.recordManage_check_left .info-group span {
+    color: #555;    
+}
+
+.recordManage_check_right {
+    flex: 2;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.recordManage_check_left_title {
+    border-left: 4px solid #73D3F3;
+    text-align: start;
+    padding-left: 20px;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+.recordManage_check_right{
+    display: flex; /* 使用 Flexbox 布局 */
+    flex-direction: column; /* 子元素垂直排列 */
+    /* height: 100vh; 容器高度占满视口 */
+}
+
+.recordManage_check_right_vedio{
+    flex: 5; /* 占 5 份 */
+    background-color: #f0f0f0; /* 添加背景颜色以便区分 */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+}
+
+.recordManage_check_right_duration{
+    flex: 1; /* 占 1 份 */
+    background-color: #e0e0e0; /* 添加背景颜色以便区分 */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+}

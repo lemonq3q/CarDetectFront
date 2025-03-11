@@ -2,17 +2,23 @@ import VueRouter from 'vue-router'
 import Vue from 'vue'
 
 import Index from '@/pages/Index.vue'
-import DeviceSearch from '@/components/DeviceSearch.vue'
-import DeviceSetting from '@/components/DeviceSetting.vue'
+// import DeviceSearch from '@/components/DeviceSearch.vue'
+// import DeviceSetting from '@/components/DeviceSetting.vue'
 import Home from '@/components/Home.vue'
+import AreaCheck from '@/components/AreaCheck.vue'
+import AreaManage from '@/components/AreaManage.vue'
+import CameraMange from '@/components/CameraManage.vue'
 import ModelSetting from '@/components/ModelSetting.vue'
 import CustomTrain from '@/components/CustomTrain.vue'
+// import Header from '@/components/Header.vue'
+import OfflineDetect from '@/components/OfflineDetect.vue'
+import RecordManage from '@/components/RecordManage.vue'
 import Login from '@/pages/Login.vue'
-import GraphicSetting from '@/components/GraphicSetting.vue'
+// import GraphicSetting from '@/components/GraphicSetting.vue'
 
 import store from '../store/index.js'
-import Employee from '@/components/Employee.vue'
-import RiskRecord from '@/components/RiskRecord.vue'
+// import Employee from '@/components/Employee.vue'
+// import RiskRecord from '@/components/RiskRecord.vue'
 import User from '@/components/User.vue'
 
 Vue.use(VueRouter)
@@ -27,7 +33,7 @@ const router = new VueRouter({
       {path: 'home', component: Home, meta: {requiresAuth: true}},
       {path: 'areaCheck', component: AreaCheck, meta: {requiresAuth: true}},
       {path: 'areaManage', component: AreaManage, meta: {requiresAuth: true}},
-      {path: 'cameraMange', component: CameraMange, meta: {requiresAuth: true}},
+      {path: 'cameraManage', component: CameraMange, meta: {requiresAuth: true}},
       {path: 'recordManage', component: RecordManage, meta: {requiresAuth: true}},
       {path: 'modelSetting', component: ModelSetting, meta: {requiresAuth: true}},
       {path: 'customTrain', component: CustomTrain, meta: {requiresAuth: true}},

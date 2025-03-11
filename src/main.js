@@ -29,3 +29,5 @@ new Vue({
   router,
   store
 }).$mount('#app')
+
+export {axios}

@@ -111,7 +111,7 @@
     position: absolute;
     top: 50%;
 }
-.btn_updatepassword{
+.btn_create{
     margin: 10px;
     height: 40px;
     width: 100px;
@@ -138,7 +138,7 @@
 }
 
 
-.btn_create{
+.btn_updatepassword{
     padding: 0 !important;
     margin: 10px 20px 10px 10px;
     height: 40px;
@@ -163,7 +163,7 @@
 /* 中间的个人主页 */
 .user_main_body{
     width: 100%;
-    margin-top: 70px;
+    /* margin-top: 70px; */
     /* box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px; */
 }
 .perform_title{
@@ -177,8 +177,8 @@
     margin-left: 3%;
     flex: 4;
     /* width: 80%; */
-    height: 100%;
-    border-radius: 10px;
+    /* height: 100%; */
+    /* border-radius: 10px; */
     /* background-color: rgba(17, 17, 26, 0.05); */
     box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
 }
@@ -191,18 +191,18 @@
 }
 /* 昵称展示部分 */
 .user_nichengbody{
+    margin-top: 20px;
     display: flex;
 }
 .user_name_inputtext{
-
-    margin-top: 20px;
+    padding-top: 5px;
+    padding-bottom: 20px;
     margin-left: 20px;
     text-align: left !important;
-
 }
 .user_name_input{
     flex: 1;
-    margin: 10px 40px;
+    margin: 10px;
     border-radius: 5px;
     height: 40px;
     border: 1px solid rgba(17, 17, 26, 0.05);
@@ -212,10 +212,19 @@
     display: block;
 }
 /* 剩下的信息展示部分 */
+.user_other_msg{
+    margin-left: 8%;
+    /* padding-top: 8%;
+    padding-bottom: 0; */
+}
+
 /* 大盒子 */
 .user_middle{
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    /* margin-top: 2%; */
+    margin:0%;
+    /* align-items: center; */
 }
 /* 小盒子 */
 .user_nameandsex,.user_facandphone,.user_idandaddr{
@@ -238,12 +247,12 @@
 }
 .user_nameinput,.user_sexinput,.user_facinput,.user_phoneinput,.user_idinput,.user_addrinput{
     margin: 10px 0;
-    height: 40px;
-    width: 80%;
+    height: 50px;
+    width: 70%;
 }
 .user_nameinputbody,.user_sexinputbody,.user_facinputbody,.user_phoneinputbody,.user_idinputbody,.user_addrinputbody{
     /* flex: 1; */
-    height: 100%;
+    height: 80%;
     width: 100%;
     border-radius: 5px;
     text-align: center;
@@ -258,20 +267,17 @@
 /* 权限展示 */
 .user_auth{
     /* margin-top: 1%; */
-    margin-right: 10%;
-    width: 15%;
-    flex: 1;
+    margin-right: 5%;
+    /* width: 15%; */
+    flex: 2;
     height: 100% ;
-    border-radius: 40px;
+    /* border-radius: 40px; */
     /* box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px; */
     /* box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; */
     box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
 
 }
-/* .user_auth.el-table_119_column_709{
-    margin-left: 10px;
-    text-align: center;
-} */
+
 
 
 /* 管理人员表单 */
@@ -285,21 +291,18 @@
 
 }
 
-user_ManageListtext_div{
-    /* position: relative; */
-    margin: 10%;
+.user_ManageListtext_div{
+    display: flex;
+    justify-content: flex-end; /* 按钮居右对齐 */
+    padding: 30px;
 }
-.user_ManageListtext{
-    /* position: absolute; */
-    /* left: 10%;
-    top:60%; */
-    left: 2px;
-    margin: 10px;
-    /* border: #fff; */
+
+.btn_user_ManageList{
+    left: 10px;
+    /* margin-top: 5%; */
+    /* margin-left: 5%; */
     text-align: left !important;
     z-index: 999;
-    /* width: 10%; */
-    /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
 }
 
 .user_body .el-select .el-input{

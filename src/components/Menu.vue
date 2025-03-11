@@ -10,7 +10,7 @@
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
-      :default-openeds="['1', '2','3','4']">
+      :default-openeds="['1', '2','3','4','5','6','7']">
 
       <!-- 首页，展示一些数据做的美观一点 -->
       <router-link to="/index/">
@@ -51,7 +51,7 @@
       </router-link>
 
       <!-- 记录管理，增删查改 -->
-      <router-link to="/index/recordMange">
+      <router-link to="/index/recordManage">
         <el-menu-item index="4">
             <i class="iconfont icon-yuangongguanli" style="font-size: 20px;margin-left:2px;"></i>
             <span slot="title">记录管理</span>

@@ -29,52 +29,7 @@
           </label>
         </div>
         <div class="user_btn">
-          <el-button plain class="btn_updatepassword" @click="dialogVisible_idencode=true">更改密码</el-button>
-          <el-dialog title="验证身份信息" :visible.sync="dialogVisible_idencode" >
-            <div class="user_phoneauth">
-              <span class="user_phoneauthtext">请输入手机号：</span>&nbsp;&nbsp;&nbsp;&nbsp;
-              <input class="user_phoneauthinput" v-model="phone">
-              <el-button plain class="btn_getcode" :disabled="isCounting" @click="getcode">{{ isCounting ? (timeLeft + '秒后重新获取') : '获取验证码' }}</el-button>
-            </div>
-            <br/>
-            <div class="user_code">
-              <span class="user_codetext">请输入验证码：</span>&nbsp;&nbsp;&nbsp;&nbsp;
-              <input class="user_codeinput" v-model="input_code"/>
-            </div>
-            <span slot="footer" class="dialog-footer_updatepassword">
-              <el-button @click="dialogVisible_edit=false">取消</el-button>
-              <el-button type="primary" @click="ensure_code">确定</el-button>
-            </span>
-          </el-dialog>
-
-          <el-dialog title="修改密码" :visible.sync="dialogVisible_password">
-            <span class="user_newpasswordtext">请输入新密码：</span>
-            <input class="user_newpasswordinput" v-model="user_newpassword"/>
-            <span slot="footer" class="dialog-footer_updatepassword">
-            <el-button @click="dialogVisible_edit=false">取消</el-button>
-            <el-button type="primary" @click="ensure_password">确定</el-button>
-            </span>
-          </el-dialog>
-
-          <el-button plain class="btn_edit" @click="dialogVisible_edit=true">编辑信息</el-button>
-          <el-dialog title="编辑个人信息" :visible.sync="dialogVisible_edit" >
-            <!-- <span>这是一段信息</span> -->
-            <form id="dialogContentArea">
-              昵称:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.username" style="width: 240px;"/><br/><br/>
-              <!-- 姓名:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.name" style="width: 240px;"/><br/><br/> -->
-              <!-- 性别:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.sex" style="width: 240px;"/><br/><br/> -->
-              <!-- 工厂:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.factory" style="width: 240px;"/><br/><br/> -->
-              电话:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.phone" style="width: 240px;"/><br/><br/>
-              <!-- ID号:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.userid" style="width: 240px;"/><br/><br/> -->
-              住址:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.useraddress" style="width: 240px;"/><br/><br/>
-              
-            </form>
-            <span slot="footer" class="dialog-footer_edit">
-              <el-button @click="dialogVisible_edit=false">取消</el-button>
-              <el-button type="primary" @click="edit_usermsg">确定</el-button>
-            </span>
-          </el-dialog>
-          <el-button plain class="btn_create" @click="dialogVisible_create = true">创建子用户</el-button>
+          <el-button plain class="btn_create" @click="dialogVisible_create = true">创建用户</el-button>
           <el-dialog title="创建用户" :visible.sync="dialogVisible_create" >
             <!-- <span>这是一段信息</span> -->
             <form id="dialogContentArea">
@@ -101,19 +56,113 @@
               <el-button type="primary" @click="add_usermsg()">确 定</el-button>
             </span>
           </el-dialog>
+
+          <el-button plain class="btn_edit" @click="dialogVisible_edit=true">编辑信息</el-button>
+          <el-dialog title="编辑个人信息" :visible.sync="dialogVisible_edit" >
+            <!-- <span>这是一段信息</span> -->
+            <form id="dialogContentArea">
+              昵称:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.username" style="width: 240px;"/><br/><br/>
+              <!-- 姓名:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.name" style="width: 240px;"/><br/><br/> -->
+              <!-- 性别:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.sex" style="width: 240px;"/><br/><br/> -->
+              <!-- 工厂:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.factory" style="width: 240px;"/><br/><br/> -->
+              电话:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.phone" style="width: 240px;"/><br/><br/>
+              <!-- ID号:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.userid" style="width: 240px;"/><br/><br/> -->
+              住址:&nbsp;&nbsp;&nbsp;&nbsp;<el-input  v-model="edit_user_allmsg.useraddress" style="width: 240px;"/><br/><br/>
+              
+            </form>
+            <span slot="footer" class="dialog-footer_edit">
+              <el-button @click="dialogVisible_edit=false">取消</el-button>
+              <el-button type="primary" @click="edit_usermsg">确定</el-button>
+            </span>
+          </el-dialog>
+
+          <el-button plain class="btn_updatepassword" @click="dialogVisible_idencode=true">更改密码</el-button>
+          <el-dialog title="验证身份信息" :visible.sync="dialogVisible_idencode" >
+            <div class="user_phoneauth">
+              <span class="user_phoneauthtext">请输入手机号：</span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <input class="user_phoneauthinput" v-model="phone">
+              <el-button plain class="btn_getcode" :disabled="isCounting" @click="getcode">{{ isCounting ? (timeLeft + '秒后重新获取') : '获取验证码' }}</el-button>
+            </div>
+            <br/>
+            <div class="user_code">
+              <span class="user_codetext">请输入验证码：</span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <input class="user_codeinput" v-model="input_code"/>
+            </div>
+            <span slot="footer" class="dialog-footer_updatepassword">
+              <el-button @click="dialogVisible_edit=false">取消</el-button>
+              <el-button type="primary" @click="ensure_code">确定</el-button>
+            </span>
+          </el-dialog>
+          <el-dialog title="修改密码" :visible.sync="dialogVisible_password">
+            <span class="user_newpasswordtext">请输入新密码：</span>
+            <input class="user_newpasswordinput" v-model="user_newpassword"/>
+            <span slot="footer" class="dialog-footer_updatepassword">
+            <el-button @click="dialogVisible_edit=false">取消</el-button>
+            <el-button type="primary" @click="ensure_password">确定</el-button>
+            </span>
+          </el-dialog>
+
         </div>
         </ul>
     </div>
 
+    <!-- <el-tag type="info">管理人员名单：</el-tag> -->
+    <div class="user_ManageListtext_div">
+      <el-button class="btn_user_ManageList" round style="text-align: center;" @click="isUser_ManageListVisible=true">管理人员名单</el-button>
+    </div>
+    <el-dialog
+    title="管理人员名单"
+    :visible.sync="isUser_ManageListVisible"
+    @close="handleDialogClose">
+    <el-table class="mainArea" :data="user_ManageLisContent" max-height="250px" stripe>
+      <el-table-column align="center" prop="userid" label="用户ID" />
+      <el-table-column align="center" prop="username" label="用户昵称" />
+      <el-table-column align="center" prop="name" label="用户名"/>
+      <el-table-column align="center" prop="phone" label="电话号码"/>
+      <el-table-column align="center" prop="employee" label="区域管理">
+        <template slot-scope="scope">
+          <img v-if="scope.row.employee ==1"src="../assets/right_down.png" style="width: 10%;"/>
+          <img v-else src="../assets/error_down.png" style="width: 10%;"/>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="device" label="摄像头管理" width="120px">
+        <template slot-scope="scope">
+          <img v-if="scope.row.device ==1"src="../assets/right_down.png" style="width: 10%;"/>
+          <img v-else src="../assets/error_down.png" style="width: 10%;"/>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="model" label="记录管理">
+        <template slot-scope="scope">
+          <img v-if="scope.row.model ==1"src="../assets/right_down.png" style="width: 10%;"/>
+          <img v-else src="../assets/error_down.png" style="width: 10%;"/>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="risk" label="模型管理">
+        <template slot-scope="scope">
+          <img v-if="scope.row.risk ==1"src="../assets/right_down.png" style="width: 10%;"/>
+          <img v-else src="../assets/error_down.png" style="width: 10%;"/>
+        </template>
+      </el-table-column>
+      <el-table-column align="center" prop="inspect" label="离线检测">
+        <template slot-scope="scope">
+          <img v-if="scope.row.inspect ==1"src="../assets/right_down.png" style="width: 10%;"/>
+          <img v-else src="../assets/error_down.png" style="width: 10%;"/>
+        </template>
+      </el-table-column>
+    </el-table>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="isUser_ManageListVisible = false">取 消</el-button>
+    </span>
+    </el-dialog>
 
     <div class="user_main_body">
       <div class="perform_title"></div>
       <div class="user_middle">
         <div class="user_msg_body">
         <!-- <div class="perform_body"> -->
-          <div class="user_name_inputtext">昵称：</div>
           <div class="user_nichengbody">
-            <input  class="user_name_input"  v-model="user_allmsg.username" placeholder="user_name" disabled="disabled" />
+          <div class="user_name_inputtext">详细信息</div>
+            <!-- <input  class="user_name_input"  v-model="user_allmsg.username" placeholder="user_name" disabled="disabled" /> -->
           </div>
           <div class="user_other_msg">
             <div class="user_nameandsex">
@@ -166,68 +215,19 @@
         </div>
         <div class="user_auth">
         <el-table :data="user_power_tabledata">
-          <el-table-column type="index" width="50" />
-          <el-table-column property="power_name" label="权限名" width="120"/>
-          <el-table-column prop="power_limit">
-            <template slot-scope="scope">
+          <el-table-column type="index" width="50" height="70px" />
+          <el-table-column property="power_name" label="权限名" height="70px" />
+          <el-table-column prop="power_limit" height="70px">
+            <!-- <template slot-scope="scope">
               <img v-if="scope.row.power_limit==='允许'" src="../assets/right.png" style="width: 20%;">
               <img v-else src="../assets/error.png"/>
-              <!-- <el-tag :type="scope.row.power_limit === '允许' ? 'success' : 'danger'" disable-transitions>{{scope.row.power_limit}}</el-tag> -->
-            </template>
+            </template> -->
           </el-table-column>
         </el-table>
         </div>
       </div>
     </div>
 
-    
-    
-    <!-- <el-tag type="info">管理人员名单：</el-tag> -->
-    <div class="user_ManageListtext_div">
-      <el-button class="user_ManageListtext" round style="text-align: center;">管理人员名单</el-button>
-    </div>
-    <div class="user_ManageList">
-      <!-- <hr id="pageHR" class="mainArea"/> -->
-      <el-table class="mainArea" :data="user_ManageLisContent" max-height="250px" stripe>
-        <!-- :fit='true' -->
-      <el-table-column align="center" prop="userid" label="用户ID" />
-      <el-table-column align="center" prop="username" label="用户昵称" />
-      <el-table-column align="center" prop="name" label="用户名"/>
-      <el-table-column align="center" prop="phone" label="电话号码"/>
-      <el-table-column align="center" prop="employee" label="员工管理">
-        <template slot-scope="scope">
-          <!-- <el-button type="text" size="small">{{scope.row.device}}</el-button> -->
-          <img v-if="scope.row.employee ==1"src="../assets/right_down.png" style="width: 10%;"/>
-          <img v-else src="../assets/error_down.png" style="width: 10%;"/>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="device" label="设备管理">
-        <template slot-scope="scope">
-          <img v-if="scope.row.device ==1"src="../assets/right_down.png" style="width: 10%;"/>
-          <img v-else src="../assets/error_down.png" style="width: 10%;"/>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="model" label="模型管理">
-        <template slot-scope="scope">
-          <img v-if="scope.row.model ==1"src="../assets/right_down.png" style="width: 10%;"/>
-          <img v-else src="../assets/error_down.png" style="width: 10%;"/>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="risk" label="风险管理">
-        <template slot-scope="scope">
-          <img v-if="scope.row.risk ==1"src="../assets/right_down.png" style="width: 10%;"/>
-          <img v-else src="../assets/error_down.png" style="width: 10%;"/>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="inspect" label="巡检管理">
-        <template slot-scope="scope">
-          <img v-if="scope.row.inspect ==1"src="../assets/right_down.png" style="width: 10%;"/>
-          <img v-else src="../assets/error_down.png" style="width: 10%;"/>
-        </template>
-      </el-table-column>
-
-      </el-table>
-    </div>
 
 
   </div>
@@ -299,19 +299,19 @@ export default {
       value1: [],
       //权限表格内容
       user_power_tabledata:[{
-        power_name:'员工管理',
+        power_name:'区域管理',
         power_limit:'禁止'
       },{
-        power_name:'设备管理',
+        power_name:'摄像头管理',
+        power_limit:'禁止'
+      },{
+        power_name:'记录管理',
         power_limit:'禁止'
       },{
         power_name:'模型管理',
         power_limit:'禁止'
       },{
-        power_name:'风险管理',
-        power_limit:'禁止'
-      },{
-        power_name:'巡检管理',
+        power_name:'离线检测',
         power_limit:'禁止'
       }],
 
@@ -321,7 +321,7 @@ export default {
       dialogVisible_edit:false,
       dialogVisible_idencode:false,
       dialogVisible_img:false,
-
+      isUser_ManageListVisible:false,
       img_src:'',
       user_msglist:'',
       resultList:{},

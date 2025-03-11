@@ -1,0 +1,64 @@
+.CameraManage_body{
+    display: flex;
+}
+
+.CameraManage_body_left {
+    flex: 5;
+    display: block;
+    margin-right: 20px;
+    padding: 20px 20px 20px 20px;
+    background-color: #fff;
+  }
+
+  .button-container {
+    text-align: left; /* 确保容器左对齐 */
+    margin-bottom: 2%;
+  }
+  
+  .custom-button {
+    background-color: #409EFF; /* 按钮背景色 */
+    border-color: #409EFF; /* 按钮边框色 */
+    color: white; /* 文字颜色 */
+    padding: 8px 16px; /* 内边距，可以根据需要调整 */
+    border-radius: 20px; /* 圆角 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 轻微阴影 */
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* 过渡效果 */
+    border: 1px solid #409EFF; /* 边框 */
+    font-size: 14px; /* 字体大小 */
+    line-height: 1; /* 行高 */
+    min-width: 100px; /* 最小宽度 */
+  }
+  
+  .custom-button:hover {
+    background-color: #66b1ff; /* 悬停时的背景色 */
+    transform: translateY(-1px); /* 悬停时的上移效果 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 悬停时的阴影 */
+  }
+  
+  .custom-button:active {
+    background-color: #2a76c6; /* 点击时的背景色 */
+    transform: translateY(0); /* 点击时恢复原位 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 点击时的阴影 */
+  }
+
+.CameraManage_body_right {
+    flex: 2;
+    display: block;
+    background-color: #fff;
+}
+
+.el-select .el-input {
+    width: 130px;
+  }
+  .input-with-select .el-input-group__prepend {
+    background-color: #fff;
+  }
+  
+  .el-table__header {
+    line-height: 30px;
+  }
+
+.camera_search_block {
+    line-height: 0;
+    margin-bottom: 2%;
+  }
