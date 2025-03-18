@@ -5,6 +5,11 @@
         <!-- 搜索框 -->
         <div class="area_search_block" style="margin-top: 15px;">
           <el-input placeholder="请输入区域关键信息查询" v-model="input" class="input-with-select">
+            <el-select v-model="select" slot="prepend" placeholder="请选择">
+              <el-option label="区域名称" value="1"></el-option>
+              <el-option label="区域地址" value="2"></el-option>
+              <el-option label="请选择" value="3"></el-option>
+            </el-select>
             <el-button slot="append" icon="el-icon-search" @click="handlerSearch"></el-button>
           </el-input>
         </div>
@@ -20,35 +25,43 @@
         style="width: 100%">
           <el-table-column
             prop="id"
-            label="区域id">
+            label="区域id"
+            width="65px">
           </el-table-column>
           <el-table-column
-            prop="name"
-            label="区域名称">
-          </el-table-column>
-          <el-table-column
-            label="区域照片"
-            width="180"
-            align="center">
-            <template slot-scope="scope">
-              <img class="area_headshot" :src="scope.row.headshot" alt="">
-            </template>
+            prop="areaName"
+            label="区域名称"
+            width="110px">
           </el-table-column>
           <el-table-column
             prop="address"
-            label="区域地址">
+            label="区域地址"
+            width="110px">
           </el-table-column>
           <el-table-column
-            label="操作"
-            width="180">
+            prop="pic"
+            label="展示照片"
+            width="100px">
             <template slot-scope="scope">
-              <el-button
-              size="mini"
-              @click="addAreaDescription(scope.row.device_id)">添加描述</el-button>
+              <el-image :src=scope.row.pic>
+                <div slot="placeholder" class="image-slot">
+                  加载中<span class="dot">...</span>
+                </div>
+              </el-image>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="description"
+            label="区域描述"
+            width="180px">
+          </el-table-column>
+          <el-table-column
+            label="操作">
+            <template slot-scope="scope">
               <el-button
                 size="mini"
                 type="danger"
-                @click="deleteDevice(scope.row.device_id)">删除</el-button>
+                @click="deleteArea(scope.row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -59,7 +72,7 @@
         layout="prev, pager, next"
         :total="pageNum"
         :current-page="currentPage"
-        :page-size="9"
+        :page-size="8"
         @current-change="handleCurrentChange">
         </el-pagination>
       </div>
@@ -81,15 +94,15 @@
             :auto-upload=false
             :on-change="handlePicChange"
             :on-remove="handlePicRemove"
-            :file-list="form.headshot">
+            :file-list="form.pic">
             <img v-if="imageUrl" :src="imageUrl" class="area_avatar">
             <i v-else class="el-icon-plus area_avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
         <el-row class="seniority_position_row">
           <el-col :span="10">
-            <el-form-item label="区域名" prop="name">
-              <el-input v-model="form.name"></el-input>
+            <el-form-item label="区域名" prop="areaName">
+              <el-input v-model="form.areaName"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="10">
@@ -100,7 +113,7 @@
         </el-row>
         <el-row class="seniority_position_row">
           <el-col :span="10">
-            <el-form-item label="检测绑定" prop="name">
+            <el-form-item label="检测绑定" >
               <el-switch v-model="form.isDetect"></el-switch>
             </el-form-item>
           </el-col>
@@ -111,16 +124,16 @@
         <el-row >
           <el-col>
             <el-form-item label="检测模型" prop="typeName">
-              <el-checkbox-group v-model="form.typeName">
-            <el-checkbox v-for="typeName in typeNames" :key="typeName.id" :label="typeName.id" :disabled="!form.isDetect">{{ modelData.name }}</el-checkbox>
-          </el-checkbox-group>
+              <el-checkbox-group v-model="form.model">
+                <el-checkbox v-for="modelData in modelDatas" :key="modelData.id" :label="modelData.id" :disabled="!form.isDetect">{{ modelData.typeName }}</el-checkbox>
+              </el-checkbox-group>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row class="seniority_position_row">
           <el-col :span="10">
-            <el-form-item label="区域介绍" prop="desc">
-              <el-input v-model="form.desc" size="large" class="desc-input" style="width: 100%; height: 100px;"></el-input>
+            <el-form-item label="区域介绍" prop="description">
+              <el-input v-model="form.description" size="large" class="desc-input" style="width: 100%; height: 100px;"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -134,6 +147,7 @@
   </template>
   
   <script>
+  import { getAreaData ,getModelData ,addAreaData ,deleteAreaData ,uploadPic} from '@/interface/AreaManage';
   import { mapState,mapMutations } from 'vuex';
 
 
@@ -143,40 +157,61 @@
       ...mapState([
         'id'
       ]),
+      tableData() {
+        const start = (this.currentPage - 1) * 6;
+        const end = start + 6;
+        return this.areaDatas.slice(start, end);
+      }
     },
     data: function() {
       return {
         input:"",
-        areaDatas:[],
+        areaDatas:[],          
+        isDetect:false,
         currentPage: 1,
-        pageNum: 100,
-        tableData: [],
+        pageNum: 10,
+        // tableData: [],
         page: 1,
-        selectArea: null,
+        select:'请选择',
+        modelDatas:[],
         imageUrl: '',
         loading: null,
-        form: {
-          name: '',
+        area:{
+          id:'',
+          areaName: '',
           address: '',
-          headshot: [],
-          desc:''
+          pageNum: this.currentPage,
+          pageSize:this.pageNum,
+
+        },
+        form: {
+          id :'',
+          areaName: '',
+          address: '',
+          pic: [],
+          description:'',
+          // detectTypes: model
+          model:[],
+          imageUrl: null,
+          filename: null,
         },
         rules:{
-          name:[
+          areaName:[
             {required: true,message:'请输入区域名',trigger: 'blur'},
           ],
           address:[
             {required: true,message:'请输入区域地址',trigger: 'blur'},
           ],
-          desc:[
+          description:[
             {required: true,message:'请输入区域介绍',trigger: 'blur'},
           ],
         }
       }
     },
-  
+
     mounted() {
-      this.getAreaData();
+      this.getAllModelData();
+      this.getAllAreaData();
       this.updateRoot('管辖区域');
       this.updatePath('区域管理');
 
@@ -186,81 +221,62 @@
       ...mapMutations([
         'updatePath','updateRoot'
       ]),
-    //获取全部区域信息
-    getAreaData() {
-      this.$http.get('/model/getAll')//调用接口
-      .then((res) => {
-        this.areaDatas = res.data;
-        this.currentPage = 1;
-        this.pageNum = this.employeeData.length;
-      })
-      .catch((err) => {
-        this.$message.error('网络连接错误');
-      });
-    },
-
-    // 通过关键信息获取区域信息
-    getAreaDataByName(){
-      this.$http.get('')
-      .then((res) => {
-        this.areaData = res.data;
-        this.currentPage = 1;
-        this.pageNum =this.areaData.length;
-      })
-    },
-    
-    // 根据id删除区域
-    deleteArea(id){
-      this.$confirm('此操作将永久删除员工 , 是否继续 ?', '提示',{
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.$http.delete('')
-        .then((res) => {
-          if(res.data=="succeed"){
-            this.$message({
-              message: '删除成功',
-              type: 'success'
-            });
-            this.deleteMyData(id);
-          }else {
-            this.$message.error('删除失败');
-          }
-        })
-        .catch((err) => {
-          this.$message.error('网络连接失败');
-        });
-        }).catch((err) => {
-       
-      });
-    },
-
-    // 删除现有数据
-    deleteMyData(id) {
-      for(let i=0;i<this.employeeData.length;i++){
-        if(this.employeeData[i].id==id){
-          this.employeeData.splice(i,1);
-          break;
-        }
+      
+    // 搜索框，按照查找类型查找(ok)
+    handlerSearch() {
+      if(this.select == 1){
+        this.area.areaName = this.input;
       }
-      this.pageNum--;
-      this.tableData = this.employeeData.slice((this.currentPage-1)*7,(this.currentPage-1)*7+7);
+      else if(this.select == 2){
+        this.area.address = this.input;
+      }
+      else if(this.select == 3){
+        this.area.areaName = null;
+        this.area.address = null;
+      }
+      this.getAllAreaData();
+    },
+
+    //获取全部区域信息(ok)
+    getAllAreaData(){
+      getAreaData(this.area)
+      .then((res)=>{
+        this.areaDatas = []
+        this.areaDatas = res.data.rows;
+        for (let i=0;i<this.areaDatas.length;i++) {
+          this.areaDatas[i].pic = 'http://'+this.$ip + '/images/' + this.areaDatas[i].pic;
+        }
+        this.pageNum = res.data.total;
+      })
+      .catch((err)=>{
+        this.$message.error('网络连接错误');
+        console.log(err);
+      })
+    },
+
+    //获取现有的model内容(ok)
+    getAllModelData(){
+      getModelData()
+      .then((res)=>{
+        for(let i=0;i<res.data.rows.length;i++){
+          let item = {
+            id: res.data.rows[i].id,
+            typeName: res.data.rows[i].typeName
+          };
+          this.modelDatas.push(item);
+        }
+      })
+      .catch((err)=>{
+        this.$message.error('网络连接错误');
+        console.log(err);
+      })
     },
 
     //翻页
     handleCurrentChange(val) {
       this.currentPage = val;
-      this.tableData = this.areaData.slice((this.currentPage-1)*7,(this.currentPage-1)*7+7);
-    },
-
-    //搜索处理
-    handlerSearch() {
-      if(this.input==""){
-        this.getAreaData();
-      }else{
-        this.getAreaDataByName();
-      }
+      this.tableData = this.areaDatas.slice((this.currentPage-1)*6,(this.currentPage-1)*6+6);
+      console.log(this.tableData);
     },
 
     //表格点击响应
@@ -268,44 +284,66 @@
       this.selectEmployee = row
       this.form = {
         id: row.id,
-        name: row.name,
+        areaName: row.areaName,
         address: row.address,
-        headshot: [],
-        desc: row.desc,
+        pic: [],
+        description: row.description,
+        detectTypes : row.detectTypes,
       };
-      this.imageUrl = row.headshot;
+      this.imageUrl = row.pic;
       this.page = 3;
     },
 
-    //添加员工按钮
+    // 根据id删除区域
+    deleteArea(id){
+      this.$confirm('此操作将永久删除该区域 , 是否继续 ?', '提示',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const idsToDelete = [parseInt(id, 10)];
+        deleteAreaData(idsToDelete)
+        .then((res) => {
+          this.$message.error('删除成功');
+          this.getAllAreaData();
+        })
+        })
+        .catch((err) => {
+        console.log(err);
+      });
+    },
+
+    //添加区域按钮
     handleAddButton() {
       this.page = 2;
     },
 
-    //添加图片
+
+    // 添加图片
     handlePicChange(file,fileList){
-      this.form.headshot = [file];
+      this.form.pic = [file];
       this.imageUrl = URL.createObjectURL(file.raw);
     },
-    
+
     //删除文件
     handlePicRemove(file,fileList) {
-      this.form.headshot = [];
-      this.imageUrl = '';
+      this.form.pic = [];
+      this.imageUrl = null;
     },
 
     //提交
     onSubmit() {
       this.$refs['area_form'].validate((valid) => {
+        console.log(1)
         if (valid) {
-          this.loading = this.$loading({
-            lock: true,
-            text: '数据上传中',
-            spinner: 'el-icon-loading',
-            background: 'rgba(0,0,0,0.7)'
-          });
+          // this.loading = this.$loading({
+          //   lock: true,
+          //   text: '数据上传中',
+          //   spinner: 'el-icon-loading',
+          //   background: 'rgba(0,0,0,0.7)'
+          // });
           if(this.page==2){
-            this.addAreaData();
+            this.addAreaInfo();
           }else{
             this.updateArea();
           }
@@ -318,139 +356,113 @@
     //取消
     handleCancel() {
       this.form =  {
-        name: '',
+        areaName: '',
         address: '',
-        headshot: [],
-        desc: ''
+        pic: [],
+        description: ''
       };
       this.imageUrl = '';
       this.page = 1;
     },
 
-    //上传图片
-    uploadHeadshot(id) {
+    // 获得图片名称(ok)
+    getHeadshotName(){
+      if (this.form.pic && this.form.pic.length > 0) {
+      const file = this.form.pic[0];
+      const originalName = file.name; // 原始文件名
+      const timestamp = Date.now(); // 当前时间戳
+
+      // 提取文件的扩展名
+      const fileExtension = originalName.split('.').pop(); // 获取文件后缀名（如 jpg、png 等）
+
+      // 生成新的文件名：时间戳 + 扩展名
+      const newFileName = `${timestamp}.${fileExtension}`;
+        // 返回新的文件名
+        return newFileName;
+      } else {
+        console.error("没有文件被选择");
+        return null; // 如果没有文件被选择，返回 null
+      }
+    },
+
+    //上传图片(ok)
+    uploadHeadshot() {
       var param = new FormData();
-      this.form.headshot.forEach(
+      this.form.pic.forEach(
         (val, index) => {
           param.append("file", val.raw);
         }
       );
-      console.log(param);
-      this.$http.post("/addData/uploadImage?filename="+id, param)
+      var id = this.getHeadshotName();
+      uploadPic(id,param)
       .then((res) => {
-        if(res.data=="succeed"){
+        console.log(res);
+        if(res.data.data == 1){
           this.$message({
             message: "上传完成！",
             type: "success"
           });
-        }else {
+          this.getAllAreaData();
+        }else{
           this.$message.error('照片上传失败');
-        }     
-        this.loading.close();
+        } 
+        // this.loading.close();
       })
       .catch((err) => {
         this.$message.error('上传失败');
-        this.loading.close();
+        // this.loading.close();
+        console.log(err);
       });
 
     },
 
-    //添加区域信息
-    addAreaData() {
-      this.$http.post('/updateData/addEmployee',{
-        name: this.form.name,
-        address: this.form.address,
-        desc: this.form.desc
-      })
-      .then((res) => {
-        if(res.data=="failed"){
-          this.$message.error('添加失败')
-        }else {
-          if(this.form.headshot.length==0){
-            this.loading.close();
-          }else {
-            this.uploadHeadshot(res.data);
-          }
-        }
-      })
-      .catch((err) => {
-        this.$message.error('网络连接错误');
-      })
+    // 初始化表单
+    formInit(){
+      this.form.id ='';
+      this.form.areaName = '';
+      this.form.address= '';
+      this.form.pic= [];
+      this.form.description='';
+      // detectTypes: model
+      this.form.model=[];
+      // this.form.imageUrl ='/static/images/new-image.jpg';
+      this.form.imageUrl ='../assets/add.png';
+      this.form.filename= null;
     },
 
-    //修改员工信息
-    updateEmployee() {
-      var tmpData = {
-        id: this.form.id,
-        name: this.form.name,
+    // 添加区域信息(ok)
+    addAreaInfo() {
+      var id = this.getHeadshotName();
+      var request_data={
+        id :this.form.id,
+        areaName: this.form.areaName,
         address: this.form.address,
-        desc: this.form.desc,
-      };
-      this.$http.post('/updateData/updateEmployee',{
-        id: this.form.id,
-        name: this.form.name,
-        address: this.form.address,
-        desc: this.form.desc
-      })
-      .then((res) => {
-        if(res.data=="failed"){
-          this.$message.error('修改失败');
+        pic: id,
+        description: this.form.description,
+      }
+    addAreaData(request_data)
+    .then((res) => {
+      if(res.data=="failed"){
+          this.$message.error('添加失败')
+      }else {
+        if(this.form.pic.length==0){
           this.loading.close();
         }else {
-          if(this.form.headshot.length!=0){
-            this.uploadHeadshot(this.form.id);
-          }else{
-            this.loading.close();
-            this.$message({
-              message: '上传成功',
-              type: 'success'
-            });
-            for(let i=0;i<this.employeeData.length;i++){
-              if(this.employeeData[i].id==tmpData.id){
-                this.employeeData[i].name = tmpData.name;
-                this.employeeData[i].address = tmpData.address;
-                this.employeeData[i].desc = tmpData.desc;
-                this.tableData = this.employeeData.slice((this.currentPage-1)*7,(this.currentPage-1)*7+7);
-                break;
-              }
-            }
-          }
+          this.uploadHeadshot();
+          this.page=1;
+          this.formInit();
         }
-      })
-      .catch((err) => {
-        this.$message.error('网络连接错误');
-        this.loading.close();
-      })
-    },
-    // // 搜索框
-    // handlerSearch(){
-    //   this.getSearchData(this.input);
-    // },
-    // getSearchData(area_id){
-    //   this.tableData = [];
-    //   this.$http.get('/device/getDevice',{
-    //     params: {
-    //       area_id: area_id==''? null : area_id,
-    //     }
-    //   })
-    //   .then((res) => {
-    //     for(let i=0;i<res.data.length;i++){
-    //       let item = {
-    //         id: res.data[i].id,
-    //         name: res.data[i].name,
-    //         name:res.data[i].address,
-    //         pic:res.data[i].pic,
-    //         desc:res.data[i].desc,
-    //       }
-    //       this.tableData.push(item);
-    //     }
-    //   })
-    //   .catch((err) => {
+      }
+    })
+    .catch((err) => {
+      this.$message.error('网络连接错误');
+      console.log(err);
+    })
+  },
 
-    //   });
-    // },
-
-    }
+    //修改区域信息
+    // updateArea() {
+}
   }
   
   </script>

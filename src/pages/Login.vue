@@ -110,7 +110,7 @@ export default {
         this.$message.error('网络连接错误');
       });
     },
-
+    
     //通过用户名获取用户信息
     getUserInfoByUsername() {
       this.$http.get('/user/getUserByUsername?username='+this.fixedUsername)
@@ -226,7 +226,7 @@ export default {
         .then((res)=>{
           let data = res.data;
           localStorage.setItem('lemon-token',data.msg);
-          console.log(data);
+          // console.log(data);
           this.setUserInfo(data.data.userid,data.data.username,data.data.headshot);
           this.$router.push('/index/home');
         })

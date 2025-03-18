@@ -48,7 +48,7 @@
 }
 
 .el-select .el-input {
-    width: 130px;
+    width: 200px;
   }
   .input-with-select .el-input-group__prepend {
     background-color: #fff;
@@ -61,4 +61,54 @@
 .camera_search_block {
     line-height: 0;
     margin-bottom: 2%;
+  }
+
+
+  /* 添加摄像头部分css样式 */
+  .button-container {
+    margin-bottom: 20px;
+  }
+  .custom-button {
+    margin-right: 10px;
+  }
+  .dialog-container {
+    padding: 20px;
+  }
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .form-label {
+    flex-shrink: 0;
+    margin-right: 10px;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  .borderless-input {
+    /* width: 200px; */
+    border: none;
+    outline: none;
+    padding: 10px;
+  }
+  .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  /* .dialog-button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+  } */
+  .dialog-button.cancel {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  /* .dialog-button.confirm {
+    background-color: #13ce66;
+    color: #fff;
+  } */
+  .ml-2 {
+    margin-left: 10px;
   }

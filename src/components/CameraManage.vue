@@ -16,58 +16,55 @@
 
       <!-- 增加摄像头按钮 -->
       <div class="button-container">
-    <el-button type="primary" round @click="centerDialogVisible = true" class="custom-button">增加摄像头</el-button>
+    <el-button type="primary" round @click="centerDialogVisible = true; " class="custom-button">增加摄像头</el-button>
   </div>
       <!-- 增加摄像头详情页（对话框） -->
-      <el-dialog v-model="centerDialogVisible" title="Warning" width="500" align-center>
-        <span>Open the dialog from the center from the screen</span>
-        <!-- <template #footer>
-          <div class="dialog-footer">
-            <div class="areaChoose">
-              请选择区域：
-              <el-dropdown>
-                <el-button type="primary">Dropdown List<el-icon class="el-icon--right"><arrow-down /></el-icon></el-button>
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item>Action 1</el-dropdown-item>
-                    <el-dropdown-item>Action 2</el-dropdown-item>
-                    <el-dropdown-item>Action 3</el-dropdown-item>
-                    <el-dropdown-item>Action 4</el-dropdown-item>
-                    <el-dropdown-item>Action 5</el-dropdown-item>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-            </div>
-            <div>
-              请输入摄像头ID
-              <el-input v-model="deviceId" style="width: 240px" placeholder="请输入摄像头ID" />
-            </div>
-            <div>
-              摄像头状态： 关闭<el-switch v-model="status" class="ml-2" style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"/>开启
-            </div>
-            <div class="desp">
-              <el-input v-model="cameraDesp" style="width: 240px" placeholder="添加描述" />
-            </div>
-            <el-button @click="centerDialogVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="addCamera">Confirm</el-button>
+      <el-dialog :visible.sync="centerDialogVisible" title="新增摄像头" width="500" align-center>
+        <div class="dialog-container">
+          <div class="form-group">
+            <label class="form-label">摄像头 ID  ：</label>&nbsp&nbsp
+            <el-input v-model="form.deviceId" placeholder="请输入摄像头ID" class="form-input borderless-input" />
           </div>
-        </template> -->
+          <div class="form-group">
+            <label class="form-label">摄像头状态：</label>
+            <el-switch v-model="form.status" class="ml-2" style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"/>开启
+          </div>
+          <div class="form-group">
+            <label class="form-label"> 绑定的区域：</label>&nbsp&nbsp
+            <el-select v-model="form.area_Id" placeholder="请选择" >
+              <el-option
+                v-for="areaData in areaDatas"
+                :key="areaData.id"
+                :label="areaData.areaName"
+                :value="areaData.areName">
+              </el-option>
+            </el-select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">摄像头描述：</label>
+            <el-input v-model="form.description" placeholder="添加描述" class="form-input borderless-input" />
+          </div>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="addCamera" class="dialog-button confirm">确定</el-button>
+          <el-button @click="centerDialogVisible = false" class="dialog-button cancel">取消</el-button>
+        </span>
       </el-dialog>
 
       <!-- 表格展示 -->
       <el-table
-      :data="tableData"
+      :data="cameraDatas"
       stripe
       border
       hight="1000"
       style="width: 100%">
         <el-table-column
-          prop="device_id"
+          prop="deviceId"
           width="150"
           label="设备ID">
         </el-table-column>
         <el-table-column
-          prop="area_id"
+          prop="areaId"
           width="150"
           label="所属区域">
         </el-table-column>
@@ -95,11 +92,8 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="addDeviceDescription(scope.row.device_id)">添加描述</el-button>
-            <el-button
-              size="mini"
               type="danger"
-              @click="deleteDevice(scope.row.device_id)">删除</el-button>
+              @click="deleteCamera(scope.row.device_id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -129,7 +123,8 @@
 
 <script>
 import { mapState,mapMutations } from 'vuex';
-
+import { getAreaData } from '@/interface/AreaManage';
+import { getCameraData,addCameraData,deleteCameraData } from '@/interface/CameraManage';
 
 export default {
   name: "CameraManage",
@@ -142,7 +137,9 @@ export default {
     return {
       input:'',
       select:'3',
-      cameraData:[],
+      selectArea:'',
+      areaDatas:[],
+      cameraDatas:[],
       currentPage:1,
       pageNum:100,
       tableData:[],
@@ -151,12 +148,28 @@ export default {
       online:0,
       offline:0,
       centerDialogVisible:false,
+      camera:{
+        deviceId: '',
+        status: false,
+        areaId :'',
+        description :'',
+        pageNum: this.currentPage,
+        pageSize:this.pageNum,
+      },
+      // 添加摄像头需要提交的表单
+      form:{
+        deviceId : '',
+        status : false,
+        area_Id : '',
+        description : '',
+      }
     }
   },
 
   mounted() {
-    this.getCameraData(null,null);
-    this.initChart();
+    this.getAllCameraData();
+    this.getAllAreaData();
+    // this.initChart();
     this.updateRoot('');
     this.updatePath('摄像头管理');
 
@@ -166,74 +179,57 @@ export default {
     ...mapMutations([
       'updatePath','updateRoot'
     ]),
-    // 获取所有摄像头的值
-    getCameraData() {
-      this.$http.get('/model/getAll')
-      .then((res) => {
-        for(let i=0;i<res.data.length;i++){
-          let item = {
-            id: res.data[i].id,
-            name: res.data[i].modelName
-          };
-          this.modelDatas.push(item);
-        }
+    // 获取所有摄像头的值(ok)
+    getAllCameraData(){
+      getCameraData(this.camera)
+      .then((res)=>{
+        console.log(res);
+        this.cameraDatas = []
+        this.cameraDatas = res.data.rows;
+        this.pageNum = res.data.total;
+        console.log(this.cameraDatas)
       })
-      .catch((err) => {
+      .catch((err)=>{
         this.$message.error('网络连接错误');
-      });
-    },
-
-    // 搜索框，按照查找类型查找
-    handlerSearch() {
-      if(this.select==3){
-        this.getDeviceData(null,null,)
-      }else if(this.select==2){
-        // 设备id查找
-        this.getDeviceData(null,this.input)
-      }
-      else if(this.select==1){
-        // 所属区域查找
-        this.getDeviceData(this.input,null)
-      }
-    },
-
-    // 根据搜索信息和信息类型获取数据    
-    getDeviceData(area_id,device_id){
-      // 调用接口
-      this.$http.get('/device/getDevice',{
-      params: {
-        device_id: device_id,
-        area_id: area_id
-      }
-      })
-      .then((res) => {
-        this.cameraData = res.data;
-        for(let i=0;i<this.cameraData.length;i++){
-          if(this.cameraData[i].description==null){
-            this.cameraData[i].description = '无';
-          }
-        }
-        // 设置总数据量
-        this.pageNum = this.cameraData.length;
-        // 设置当前页数
-        this.currentPage = 1;
-        // 获取第一页数据
-        this.tableData = this.cameraData.slice(0,9);
-      })
-      .catch(err=>{
         console.log(err);
       })
     },
 
-    // 增加摄像头设备
-    addCamera() {
-      // 调用接口
-      this.$http.post('/device/addDevice',{
-        device_id:  this.form.device_id,
-        area_id: this.form.area_id,
-        lastTime: new Date().getTime(),
-        description: this.form.desc==''? null : this.form.desc
+    //获取全部区域信息(ok)
+    getAllAreaData(){
+      getAreaData(this.area)
+      .then((res)=>{
+        this.areaDatas = []
+        this.areaDatas = res.data.rows;
+        for (let i=0;i<this.areaDatas.length;i++) {
+          this.areaDatas[i].pic = 'http://'+this.$ip + '/images/' + this.areaDatas[i].pic;
+        }
+        this.pageNum = res.data.total;
       })
+      .catch((err)=>{
+        this.$message.error('网络连接错误');
+        console.log(err);
+      })
+    },
+
+    // 搜索框，按照查找类型查找(ok)
+    handlerSearch() {
+      if(this.select == 1){
+        this.camera.areaID = this.input;
+      }
+      else if(this.select == 2){
+        this.camera.deviceId = this.input;
+      }
+      else if(this.select == 3){
+        this.area.areaName = null;
+        this.area.address = null;
+      }
+      this.getAllCameraData();
+    },
+
+    // 增加摄像头设备
+    addCamera(){
+      addCameraData(this.form)
       .then((res) => {
         if(res.data=='succeed'){
           this.addDeviceModel(this.form.device_id);
@@ -250,10 +246,29 @@ export default {
         }
       })
       .catch((err) => {
+        console.log(err);
         this.$message.error('网络连接错误');
-      });
+      })
     },
-    // 表格中对摄像头进行增加描述和删除操作
+
+    // 表格中对摄像头进行删除操作
+    deleteCamera(id){
+      this.$confirm('此操作将永久删除该设备, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteCameraData(id)
+        .then((res) => {
+          // 这里写如果收到删除成功的结果就alert一个删除成功（为什么会出现删除失败的情况呢）
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$message.error('网络连接错误');
+        })
+      })
+      
+    },
     deleteDevice(device_id) {
       this.$confirm('此操作将永久删除该设备, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -335,6 +350,12 @@ export default {
 
     });
 
+    },
+
+    //翻页
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.tableData = this.areaData.slice((this.currentPage-1)*7,(this.currentPage-1)*7+7);
     },
   }
 }

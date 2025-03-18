@@ -142,179 +142,47 @@
       return {
         input: '',
         select: '3',
-        deviceData: [],
+        recordDatas: [],
+        record:{
+          
+        },
         currentPage: 1,
         factory: '0',
-        pageNum: 100,
+        pageNum: 10,
         tableData: [],
         pieChart: null,
         categoryChart: null,
-        online: 0,
-        offline: 0,
-        recordSerachVisual:false,
-        recordCheckVisual:true,
+        recordSerachVisual:true,
+        recordCheckVisual:false,
       }
     },
   
     mounted() {
+      this.getAllRecordData();
       this.getDeviceData(null,null,null);
       this.initChart();
-      this.updateRoot('设备管理');
-      this.updatePath('设备搜索');
+      this.updateRoot('');
+      this.updatePath('记录管理');
     },
   
     methods: {
       ...mapMutations([
         'updatePath','updateRoot'
       ]),
-      //根据搜索信息和信息类型获取数据
-      getDeviceData(device_id,type,workshop) {
-  
-        this.$http.get('/device/getDevice',{
-          params: {
-            device_id: device_id,
-            type: type,
-            workshop: workshop
-          }
-        })
-        .then((res) => {
-          this.deviceData = res.data;
-          for(let i=0;i<this.deviceData.length;i++){
-            if(this.deviceData[i].description==null){
-              this.deviceData[i].description = '无';
-            }
-  
-            var date = new Date(this.deviceData[i].lastTime);
-            var year = date.getFullYear(); 
-            var month = ("0" + (date.getMonth() + 1)).slice(-2); 
-            var day = ("0" + date.getDate()).slice(-2); 
-  
-            // 构造年月日字符串
-            this.deviceData[i].lastTime = year + "-" + month + "-" + day;
-            this.deviceData[i].workshop = '厂房'+ this.deviceData[i].workshop;
-          }
-          // 设置总数据量
-          this.pageNum = this.deviceData.length;
-          // 设置当前页数
-          this.currentPage = 1;
-          // 获取第一页数据
-          this.tableData = this.deviceData.slice(0,9);
-          // 更新图的数据
-          var chartData = this.getPieData(this.deviceData);
-          this.updatePieChart('设备种类饼图',chartData);
-          chartData = this.getCategoryData(this.deviceData);
-          this.updateCategoryChart(chartData);
-          //更新在线数据
-          var onlineData = this.getOnlineNum(this.deviceData);
-          this.online = onlineData.online;
-          this.offline = onlineData.offline;
-        })
-        .catch(err=>{
-          console.log(err);
-        })
-  
+      // 获取所有的记录数据
+      getAllRecordData(){
+        get
       },
-  
-      deleteDevice(device_id) {
-  
-        this.$confirm('此操作将永久删除该设备, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$http.delete('/device/deleteDevice?device_id='+device_id)
-          .then((res) => {
-            if(res.data=="succeed"){
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
-              });
-              //更新现有数据
-              for(let i=0;i<this.deviceData.length;i++){
-                if(this.deviceData[i].device_id==device_id){
-                  this.deviceData.splice(i,1);
-                  break;
-                }
-              }
-              this.pageNum--;
-              this.tableData = this.deviceData.slice((this.currentPage-1)*9,(this.currentPage-1)*9+9);
-              // 更新图的数据
-              var chartData = this.getPieData(this.deviceData);
-              this.updatePieChart('设备种类饼图',chartData);
-              chartData = this.getCategoryData(this.deviceData);
-              this.updateCategoryChart(chartData);
-              //更新在线数据
-              var onlineData = this.getOnlineNum(this.deviceData);
-              this.online = onlineData.online;
-              this.offline = onlineData.offline;
-            }else{
-              this.$message({
-                type: 'info',
-                message: '删除失败'
-              });        
-            }
-          })
-          .catch((err) => {
-            this.$message({
-              type: 'info',
-              message: '删除失败'
-            });
-          })
-        }).catch((err) => {
-         
-        });
-        
-      },
-  
-      addDeviceDescription(device_id) {
-  
-        this.$prompt('请输入描述', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-        }).then(({ value }) => {
-          this.$http.post('/device/updateDescription?device_id='+device_id+'&description='+value)
-          .then((res) => {
-            if(res.data=="succeed"){
-              this.$message({
-                type: 'success',
-                message: '添加成功'
-              });
-               //更新现有数据
-              for(let i=0;i<this.deviceData.length;i++){
-                if(this.deviceData[i].device_id==device_id){
-                  this.deviceData[i].description = value
-                  break
-                }
-              }
-              this.tableData = this.deviceData.slice((this.currentPage-1)*9,(this.currentPage-1)*9+9);
-            }else {
-              this.$message({
-                type: 'info',
-                message: '添加失败'
-              });
-            }
-          })
-          .catch((err) => {
-            this.$message({
-              type: 'info',
-              message: '添加失败'
-            });
-          })
-        }).catch(() => {
-  
-        });
-  
-      },
-  
+
+
+
+      // 分页查询
       handleCurrentChange(val) {
-        
         this.currentPage = val
         this.tableData = this.deviceData.slice((this.currentPage-1)*9,(this.currentPage-1)*9+9)
-      
       },
   
       handlerSearch() {
-  
         var workshop = this.factory
         if(workshop=='0'){
           workshop = null
@@ -329,110 +197,7 @@
         }
   
       },
-  
-      handlerWorkshopChange(factory) {
-        if(factory=='0'){
-          if(this.select==3){
-            this.getDeviceData(null,null,null)
-          }else if(this.select==2){
-            this.getDeviceData(null,this.input,null)
-          }
-          else if(this.select==1){
-            this.getDeviceData(this.input,null,null)
-          }
-        }else {
-          if(this.select==3){
-            this.getDeviceData(null,null,factory)
-          }else if(this.select==2){
-            this.getDeviceData(null,this.input,factory)
-          }
-          else if(this.select==1){
-            this.getDeviceData(this.input,null,factory)
-          }
-        }
-  
-      },
-  
-      // 初始化图表
-      initChart() {
-  
-        this.pieChart = this.$echarts.init(this.$refs.pieChart);
-        this.categoryChart = this.$echarts.init(this.$refs.categoryChart);
-  
-      },
-  
-      // 更新饼状图
-      updatePieChart(title,data) {
-  
-        var option = getPieChart(title,data);
-        this.pieChart.setOption(option);
-  
-      },
-      // 更新柱状图
-      updateCategoryChart(data) {
-        var option = getCategoryChart(data);
-        this.categoryChart.setOption(option);
-      },
-  
-      //获取饼图数据
-      getPieData(data) {
-        var result = [];
-        for(let i=0;i<data.length;i++){
-          let flag = 0;
-          for(let j=0;j<result.length;j++){
-            if(result[j].name==data[i].type){
-              result[j].value++;
-              flag = 1;
-            }
-          }
-          if(flag==0){
-            let item = {
-              value: 1,
-              name: data[i].type
-            };
-            result.push(item);
-          }
-        }
-        return result;
-      },
-  
-      //获取柱状图数据
-      getCategoryData(data) {
-        let x = ['厂房1','厂房2','厂房3','厂房4'];
-        let y = [0,0,0,0];
-        for(let i=0;i<data.length;i++){
-          for(let j=0;j<4;j++){
-            if(data[i].workshop==x[j]){
-              y[j]++;
-            }
-          }
-        }
-        return {
-          x: x,
-          y: y
-        };
-      },
-      
-      //获取设备在线和离线的数据
-      getOnlineNum(data) {
-        var online = 0;
-        var offline = 0;
-        for(let i=0;i<data.length;i++){
-          if(data[i].state==1){
-            online++;
-          }
-          else{
-            offline++;
-          }
-        }
-        return {
-          online: online,
-          offline: offline
-        };
-      }
-      
-    },
-  
+    }
   }
   
   </script>
