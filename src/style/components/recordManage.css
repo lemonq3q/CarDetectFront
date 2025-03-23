@@ -17,6 +17,11 @@
     margin-bottom: 5%;
 }
 
+.recordManage_left .search_block .input-with-select .el-select{
+    width: 140px;
+}
+
+
 .el-pagination {
     margin: 20px 0;
     line-height: 0;
@@ -35,6 +40,8 @@
     display: block;
     background-color: #b86f6f;
 }
+
+
 
 /* 记录详细展示界面的css */
 .recordManage_body_check {
@@ -57,19 +64,40 @@
 .recordManage_check_left .info-group {
     margin-bottom: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
+    margin-top:30px; 
+}
+
+.recordManage_check_left .info-group:first-child {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top:10%; 
+}
+
+.recordManage_check_left .info-group:last-child {
+    margin-bottom: 10%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top:30px; 
 }
 
 .recordManage_check_left .info-group label {
-    /* font-weight: bold; */
-    margin-top:30px;
     margin-left: 10px;
     color: grey;
+    width: 120px;
+    font-size: 17px;
+    text-align: left;
 }
 
 .recordManage_check_left .info-group span {
     color: #555;    
+    font-size: 17px;
+    display: inline-block;
+    /* text-align: left; 居左对齐 */
 }
 
 .recordManage_check_right {
@@ -85,8 +113,9 @@
     text-align: start;
     padding-left: 20px;
     font-weight: 700;
-    font-size: 20px;
-    margin-bottom: 20px;
+    font-size: 25px;
+    margin-top:7%;
+    margin-bottom: 10%;
   }
 
 .recordManage_check_right{

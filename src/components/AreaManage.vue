@@ -124,7 +124,7 @@
         <el-row >
           <el-col>
             <el-form-item label="检测模型" prop="typeName">
-              <el-checkbox-group v-model="form.model">
+              <el-checkbox-group v-model="form.detectTypes">
                 <el-checkbox v-for="modelData in modelDatas" :key="modelData.id" :label="modelData.id" :disabled="!form.isDetect">{{ modelData.typeName }}</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
@@ -147,7 +147,7 @@
   </template>
   
   <script>
-  import { getAreaData ,getModelData ,addAreaData ,deleteAreaData ,uploadPic} from '@/interface/AreaManage';
+  import { getAreaData ,getModelData ,addAreaData ,deleteAreaData ,uploadPic ,updateAreaData} from '@/interface/AreaManage';
   import { mapState,mapMutations } from 'vuex';
 
 
@@ -167,10 +167,8 @@
       return {
         input:"",
         areaDatas:[],          
-        isDetect:false,
         currentPage: 1,
         pageNum: 10,
-        // tableData: [],
         page: 1,
         select:'请选择',
         modelDatas:[],
@@ -182,7 +180,6 @@
           address: '',
           pageNum: this.currentPage,
           pageSize:this.pageNum,
-
         },
         form: {
           id :'',
@@ -190,9 +187,8 @@
           address: '',
           pic: [],
           description:'',
-          // detectTypes: model
-          model:[],
-          imageUrl: null,
+          detectTypes: [],
+          isDetect:false,
           filename: null,
         },
         rules:{
@@ -281,37 +277,38 @@
 
     //表格点击响应
     handlerCellClick(row,column,cell,event) {
-      this.selectEmployee = row
-      this.form = {
-        id: row.id,
-        areaName: row.areaName,
-        address: row.address,
-        pic: [],
-        description: row.description,
-        detectTypes : row.detectTypes,
-      };
+      this.formInit();
+      // 获取该row对应的detectTypes数据
+      const genreArray = [];
+      this.area.areaName = row.areaName;
+      this.area.address = row.address;
+      getAreaData(this.area)
+      .then((res) => {
+        console.log(res);
+        // 如果detectTypes不是空的就循环访问构造新数组
+        if(res.data.rows[0].detectTypes.length>0){
+          this.form.isDetect = true;
+          for(let i = 0; i < res.data.rows[0].detectTypes.length; i++ ){
+          // 提取每个对象的 genre 属性值
+          const genre = res.data.rows[0].detectTypes[i].genre;
+          // 将 genre 值推入新的数组
+          genreArray.push(genre);
+        }
+        }
+        this.form.detectTypes = genreArray;
+      })
+      // 先把照片放到右侧
+      // this.form.pic = row.pic;
+      this.form.id = row.id;
+      this.form.areaName  = row.areaName;
+      this.form.address = row.address;
+      this.form.description = row.description;
+      this.form.detectTypes = genreArray;
       this.imageUrl = row.pic;
       this.page = 3;
     },
 
-    // 根据id删除区域
-    deleteArea(id){
-      this.$confirm('此操作将永久删除该区域 , 是否继续 ?', '提示',{
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        const idsToDelete = [parseInt(id, 10)];
-        deleteAreaData(idsToDelete)
-        .then((res) => {
-          this.$message.error('删除成功');
-          this.getAllAreaData();
-        })
-        })
-        .catch((err) => {
-        console.log(err);
-      });
-    },
+
 
     //添加区域按钮
     handleAddButton() {
@@ -345,7 +342,7 @@
           if(this.page==2){
             this.addAreaInfo();
           }else{
-            this.updateArea();
+            this.updateAreaInfo();
           }
         } else {
 
@@ -423,9 +420,8 @@
       this.form.address= '';
       this.form.pic= [];
       this.form.description='';
-      // detectTypes: model
-      this.form.model=[];
-      // this.form.imageUrl ='/static/images/new-image.jpg';
+      this.form .detectTypes=[],
+      this.form.isDetect=false;
       this.form.imageUrl ='../assets/add.png';
       this.form.filename= null;
     },
@@ -433,18 +429,21 @@
     // 添加区域信息(ok)
     addAreaInfo() {
       var id = this.getHeadshotName();
+      const objectArray = [];
+      this.form.detectTypes.forEach (item => {
+        objectArray.push({ genre: item });
+      });
       var request_data={
         id :this.form.id,
         areaName: this.form.areaName,
         address: this.form.address,
         pic: id,
+        detectTypes: objectArray,
         description: this.form.description,
       }
+      console.log(request_data);
     addAreaData(request_data)
     .then((res) => {
-      if(res.data=="failed"){
-          this.$message.error('添加失败')
-      }else {
         if(this.form.pic.length==0){
           this.loading.close();
         }else {
@@ -452,7 +451,6 @@
           this.page=1;
           this.formInit();
         }
-      }
     })
     .catch((err) => {
       this.$message.error('网络连接错误');
@@ -461,14 +459,68 @@
   },
 
     //修改区域信息
-    // updateArea() {
+    updateAreaInfo() {
+      const objectArray = [];
+      this.form.detectTypes.forEach (item => {
+        objectArray.push({ genre: item });
+      });
+      var request_data={
+        id: this.form.id,
+        areaName: this.form.areaName,
+        address: this.form.address,
+        detectTypes: objectArray,
+        description: this.form.description,
+      }
+      console.log(request_data);
+      updateAreaData(request_data)
+      .then((res) => {
+        if(res.data=="failed"){
+            this.$message.error('修改失败')
+        }else {
+          // if(this.form.pic.length==0){
+          //   this.loading.close();
+          // }else {
+            // this.uploadHeadshot();
+            this.page=1;
+            this.formInit();
+            this.area.areaName=null;
+            this.area.address=null;
+            this.getAllAreaData();
+          // }
+        }
+      })
+      .catch((err) => {
+        this.$message.error('网络连接错误');
+        console.log(err);
+      })
+    },
+    
+    // 根据id删除区域
+    deleteArea(id){
+      this.$confirm('此操作将永久删除该区域 , 是否继续 ?', '提示',{
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const idsToDelete = [parseInt(id, 10)];
+        deleteAreaData(idsToDelete)
+        .then((res) => {
+          this.$message.error('删除成功');
+          this.area.areaName='';
+          this.area.address='';
+          this.getAllAreaData();
+        })
+        })
+        .catch((err) => {
+        console.log(err);
+      });
+    },
 }
   }
   
   </script>
   
   <style>
-    /* @import '../style/components/modelSetting.css' */
     @import '../style/components/areaManage.css'
   
   </style>

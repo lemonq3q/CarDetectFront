@@ -47,68 +47,101 @@
     background-color: #fff;
 }
 
-.el-select .el-input {
-    width: 200px;
-  }
-  .input-with-select .el-input-group__prepend {
-    background-color: #fff;
-  }
-  
-  .el-table__header {
-    line-height: 30px;
-  }
-
 .camera_search_block {
-    line-height: 0;
-    margin-bottom: 2%;
-  }
+  margin-top: 15px;
+  margin-bottom: 2%;
+}
+
+.camera_search_block .input-with-select .el-select{
+  width: 140px;
+}
+
+.search-input .el-input-group__prepend {
+  background-color: #f5f5f5f5; /* 选择框背景色 */
+  border-right: 1px solid #dcdfe6; /* 选择框与输入框之间的边框 */
+}
+
+.search-input .el-input__inner {
+  border-radius: 0 4px 4px 0; /* 输入框圆角 */
+  border-left: none; /* 移除输入框左侧边框 */
+}
+
+.search-input .el-input-group__append {
+  background-color: #f5f5f5f5; /* 按钮背景色 */
+  border-left: 1px solid #dcdfe6; /* 按钮与输入框之间的边框 */
+}
+
+.search-input .el-select .el-input {
+  width: 150px; /* 选择框宽度 */
+}
+
+.search-input .el-input__inner {
+  padding-left: 10px; /* 输入框内边距 */
+}
+
+.search-input .el-button {
+  padding: 0 10px; /* 按钮内边距 */
+  width: 100px;
+}
 
 
   /* 添加摄像头部分css样式 */
-  .button-container {
-    margin-bottom: 20px;
-  }
-  .custom-button {
-    margin-right: 10px;
-  }
-  .dialog-container {
+  .dialog_container_top {
+    display: flex;
+    justify-content: space-between; 
     padding: 20px;
+    height: 40%;
   }
-  .form-group {
+  
+  .container_left {
+    flex: 1; 
+    display: flex;
+    flex-direction: column; 
+  }
+  
+  .form-group-top ,.form-group-bottom{
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 20px; 
   }
+  
   .form-label {
-    flex-shrink: 0;
-    margin-right: 10px;
+    flex-shrink: 0; 
+    margin-right: 15px; 
     font-weight: bold;
     white-space: nowrap;
+    width: 100px; 
   }
-  .borderless-input {
-    /* width: 200px; */
-    border: none;
-    outline: none;
-    padding: 10px;
+  
+  .cameraIdInput {
+    flex-grow: 1; 
   }
-  .dialog-footer {
-    display: flex;
-    justify-content: flex-end;
-  }
-  /* .dialog-button {
-    margin-left: 10px;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-size: 14px;
-  } */
-  .dialog-button.cancel {
-    background-color: #f0f0f0;
-    color: #333;
-  }
-  /* .dialog-button.confirm {
-    background-color: #13ce66;
-    color: #fff;
-  } */
+  
   .ml-2 {
     margin-left: 10px;
+  }
+  
+  .el-select {
+    width: 100%; 
+  }
+  
+  .container_right {
+    flex: 1; 
+    background-color: #2a76c6;
+    margin-left: 20px; 
+  }
+
+  .dialog_container_bottom{
+    padding: 0 20px;
+  }
+
+  .form_div_ingredient{
+    margin-right: 15%;
+  }
+  .form_div_ingredient .el-input{
+    width: 156%;
+  }
+
+  .form-input{
+    height: 30% !important;
   }

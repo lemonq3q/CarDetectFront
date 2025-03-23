@@ -103,11 +103,6 @@
     display: flex;
     justify-content: space-start;
 }
-/* .seniority_position_row {
-    width: 100%;
-} */
-
-
 
 
 .desc-input .el-input__inner {
@@ -115,6 +110,10 @@
     height: 100px;
     padding-right: 20px; /* 留出空间给斜杠 */
     position: relative;
+}
+
+.area_search_block .input-with-select .el-select{
+    width: 140px;
 }
 
 .desc-input .el-input__inner::after {

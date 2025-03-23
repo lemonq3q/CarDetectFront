@@ -8,55 +8,58 @@
             <el-select v-model="select" slot="prepend" placeholder="请选择">
               <el-option label="车辆类型名" value="1"></el-option>
               <el-option label="车牌号" value="2"></el-option>
-              <el-option label="检测时间" value="3"></el-option>
-              <el-option label="检测区域" value="4"></el-option>
-              <el-option label="摄像头" value="5"></el-option>
-              <el-option label="请选择" value="6"></el-option>
+              <el-option label="检测区域" value="3"></el-option>
+              <el-option label="摄像头" value="4"></el-option>
+              <el-option label="请选择" value="5"></el-option>
             </el-select>
             <el-button slot="append" icon="el-icon-search" @click="handlerSearch"></el-button>
           </el-input>
         </div>
 
-        <!-- form表格展示 -->
+        <!-- form表格展示简略记录 -->
         <el-table
         :data="tableData"
         stripe
         border
         hight="1000"
-        style="width: 100%">
+        style="width: 100%; ">
           <el-table-column
-            prop="car_id"
-            label="车牌号">
+            prop="id"
+            label="记录号"
+            width="65px">
           </el-table-column>
           <el-table-column
-            prop="type_id"
+            prop="carId"
+            label="车牌号"
+            width="110px">
+          </el-table-column>
+          <el-table-column
+            prop="typeName"
             label="车辆类型"
             width="100">
           </el-table-column>
           <el-table-column
-            prop="type_name"
-            label="车辆类型名"
-            width="100">
+            prop="areaName"
+            label="检测区域"
+            width="120px">
           </el-table-column>
           <el-table-column
-            prop="time"
-            label="检测时间">
+            prop="areaAddress"
+            label="区域地址"
+            width="200px">
           </el-table-column>
           <el-table-column
-            prop="area_id"
-            label="检测区域">
-          </el-table-column>
-          <el-table-column
-            prop="camera_id"
+            prop="cameraId"
             label="摄像头ID">
           </el-table-column>
           <el-table-column
             label="操作"
-            width="180">
+            width="180px">
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="addDeviceDescription(scope.row.device_id)">添加描述</el-button>
+                type="primary"
+                @click="handleVeiwDetails(scope.row)">查看详情</el-button>
               <el-button
                 size="mini"
                 type="danger"
@@ -79,13 +82,15 @@
       <!-- 右侧展示 -->
       <div class="recordManage_right">
         <div class="chart_title">记录综合情况</div>
-        <div class="chart_word">总记录数量：{{ online }}</div>
+        <!-- <div class="chart_word">总记录数量：{{ online }}</div> -->
         <div class="chart_title">各类型车辆记录分布</div>
         <div class="chart" ref="pieChart"></div>
         <div class="chart_title">各区域记录分布</div>
         <div class="chart" ref="categoryChart"></div>
       </div>
     </div>
+
+    <!-- 详细内容 -->
     <div class="recordManage_body_check" v-if="recordCheckVisual">
         <!-- 左侧展示记录的详细信息 -->
         <div class="recordManage_check_left">
@@ -94,27 +99,27 @@
             </div>
             <div class="info-group">
                 <label>车辆类型：</label>
-                <span>{{ type_id }}</span>
+                <span>{{ this.form.typeId }}</span>
             </div>
             <div class="info-group">
                 <label>车辆类型名：</label>
-                <span>{{ type_name }}</span>
+                <span>{{ this.form.typeName }}</span>
             </div>
             <div class="info-group">
                 <label>车牌号：</label>
-                <span>{{ car_id }}</span>
+                <span>{{ this.form.carId }}</span>
             </div>
             <div class="info-group">
                 <label>检测时间：</label>
-                <span>{{ time }}</span>
+                <span>{{ this.form.recordTime }}</span>
             </div>
             <div class="info-group">
                 <label>检测区域：</label>
-                <span>{{ area_id }}</span>
+                <span>{{ this.form.areaName }}</span>
             </div>
             <div class="info-group">
-                <label>摄像头：</label>
-                <span>{{ camera_id }}</span>
+                <label>摄像头ID：</label>
+                <span>{{ this.form.cameraId }}</span>
             </div>
         </div>
         <!-- 右侧展示切片的视频流 -->
@@ -134,22 +139,48 @@
   <script>
   import {getPieChart, getCategoryChart} from '../echart'
   import { mapMutations } from 'vuex';
+  import { getRecordData ,addRecordData ,updateRecordData ,deleteRecordData } from '../interface/RecordManage';
   
   export default {
     name: "DeviceSearch",
-  
+    computed:{
+      tableData() {
+        const start = (this.currentPage - 1) * 6;
+        const end = start + 6;
+        return this.recordDatas.slice(start, end);
+      }
+    },
     data: function() {
       return {
         input: '',
         select: '3',
         recordDatas: [],
         record:{
-          
+          id : null,
+          typeId : '',
+          typeName : '',
+          carId : '',
+          recordTime : '',
+          video : '',
+          areaId : '',
+          areaName : '',
+          areaAddress : '',
+          cameraId : ''
+        },
+        form:{
+          id : null,
+          typeId : '',
+          typeName : '',
+          carId : '',
+          recordTime : '',
+          video : '',
+          areaId : '',
+          areaName : '',
+          areaAddress : '',
+          cameraId : ''
         },
         currentPage: 1,
-        factory: '0',
         pageNum: 10,
-        tableData: [],
         pieChart: null,
         categoryChart: null,
         recordSerachVisual:true,
@@ -159,9 +190,7 @@
   
     mounted() {
       this.getAllRecordData();
-      this.getDeviceData(null,null,null);
-      this.initChart();
-      this.updateRoot('');
+      this.updateRoot('记录管理');
       this.updatePath('记录管理');
     },
   
@@ -169,34 +198,81 @@
       ...mapMutations([
         'updatePath','updateRoot'
       ]),
-      // 获取所有的记录数据
+      // 获取所有的记录数据(ok)
       getAllRecordData(){
-        get
+        getRecordData(this.record)
+        .then((res) => {
+          console.log(res);
+          this.recordDatas = [];
+          this.recordDatas = res.data.rows;
+          console.log(this.recordDatas);
+          this.pageNum = res.data.total;
+        })
+        .catch((err) => {
+          this.$message.error('网络连接错误');
+          console.log(err);
+        })
       },
 
-
-
-      // 分页查询
+      // 翻页(ok)
       handleCurrentChange(val) {
         this.currentPage = val
         this.tableData = this.deviceData.slice((this.currentPage-1)*9,(this.currentPage-1)*9+9)
       },
-  
-      handlerSearch() {
-        var workshop = this.factory
-        if(workshop=='0'){
-          workshop = null
-        }
-        if(this.select==3){
-          this.getDeviceData(null,null,workshop)
-        }else if(this.select==2){
-          this.getDeviceData(null,this.input,workshop)
-        }
-        else if(this.select==1){
-          this.getDeviceData(this.input,null,workshop)
-        }
-  
+
+      // 初始化record
+      recordInit(){
+        this.record.id = '';
+        this.record.typeId = '';
+        this.record.typeName = '';
+        this.record.carId = '';
+        this.record.recordTime = '';
+        this.record.areaId = '',
+        this.record.areaName = '';
+        this.record.areaAddress = '';
+        this.record.cameraId = '';
+        this.record.video = '';
+        this.record.recordTime = '';
       },
+
+      // 根据选择搜索相应的记录
+      handlerSearch() {
+        this.recordInit();
+        if(this.select == 1){
+          this.record.typeName = this.input;
+        }
+        else if(this.select == 2){
+          this.record.carId = this.input;
+        }
+        else if(this.select == 3){
+          this.record.areaName = this.input;
+        }
+        else if(this.select == 4){
+          this.record.cameraId = this.inupt;
+        }
+        this.getAllAreaData();
+      },
+
+      // 通过点击button查看每条记录的详细内容
+      handleVeiwDetails(row){
+        this.recordSerachVisual=false;
+        this.recordCheckVisual=true;
+        console.log(row);
+        // getRecordData(this.row)
+        // .then((res) => {
+
+        // })
+        this.form = {
+          typeId : row.typeId,
+          typeName : row.typeName,
+          carId : row.carId,
+          recordTime : row.recordTime,
+          areaId : row.areaId,
+          areaName : row.areaName,
+          areaAddress : row.areaAddress,
+          cameraId : row.cameraId
+        }
+      }
     }
   }
   

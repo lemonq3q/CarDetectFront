@@ -16,13 +16,9 @@ function deleteAreaData(id){
     return axios.delete('/area?ids='+id);
 }
 
-// function deleteAreaData(idsToDelete){
-//     const idsParam = idsToDelete.map(id => encodeURIComponent(id.toString())).join(',');
-
-//     // 拼接请求 URL
-//     const url = `/area?ids=${idsParam}`;
-//     return axios(url);
-// }
+function updateAreaData(param){
+    return axios.post('/area',param);
+}
 
 function getModelData(){
     return axios.get('/detectType?pageNum='+ 1 +'&pageSize=' + 9999);
@@ -34,4 +30,4 @@ function uploadPic(filename,param){
 
 
 
-export {getAreaData,getModelData,addAreaData,deleteAreaData,uploadPic} 
+export {getAreaData ,getModelData ,addAreaData ,deleteAreaData ,uploadPic ,updateAreaData} 

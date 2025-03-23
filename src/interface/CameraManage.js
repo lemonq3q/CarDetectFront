@@ -12,7 +12,7 @@ function addCameraData(camera){
 }
 
 function deleteCameraData(id){
-    return axios.delete('/camera?id='+id)
+    return axios.delete('/camera?ids='+id)
 }
 
 export {getCameraData,addCameraData,deleteCameraData} 
