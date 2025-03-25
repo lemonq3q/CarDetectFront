@@ -99,6 +99,12 @@
     flex-direction: column; 
   }
   
+  .between {
+    width: 30px;
+    text-align: center;
+    padding: auto auto;
+  }
+
   .form-group-top ,.form-group-bottom{
     display: flex;
     align-items: center;
@@ -127,8 +133,47 @@
   
   .container_right {
     flex: 1; 
-    background-color: #2a76c6;
     margin-left: 20px; 
+
+  }
+
+  .graphic_setting{
+    width: 100%;
+    height: 100%;
+  }
+
+  .camera_graphic{
+    position: relative;
+    height: 20px;
+    background-color: #FFDE59;
+    border: 1px dashed grey;
+    margin-bottom: 20px;
+  }
+
+  #canvas {
+    pointer-events: none;
+  }
+
+  .graphic{
+    padding-top: 10px;
+    width: 100%;
+    height: 100%;
+    background-image: url("/src/assets/cameraAdd.png");
+    background-size: 50px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    border: 1px dashed grey;
+  }
+
+  .camera_div{
+    width: 60px;
+    height: 60px;
+    /* background-color: blue; */
+    background-image: url("/src/assets/camera.png");
+    background-size: 50px;
+    background-position: center center;
+    background-repeat: no-repeat;
   }
 
   .dialog_container_bottom{
@@ -136,7 +181,7 @@
   }
 
   .form_div_ingredient{
-    margin-right: 15%;
+    /* margin-right: 15px; */
   }
   .form_div_ingredient .el-input{
     width: 156%;

@@ -8,7 +8,7 @@ function getCameraData(camera){
 
 function addCameraData(camera){
 
-    return axios.post('/camera',camera);
+    return axios.put('/camera',camera);
 }
 
 function deleteCameraData(id){
