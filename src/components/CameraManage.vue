@@ -179,7 +179,7 @@ export default {
   data: function() {
     return {
       diaologType: 1,
-      diaologTitle: '新增摄像头',
+      diaologTitle: '',
       Label: null,
       labelX: -1,
       labelY: -1,
